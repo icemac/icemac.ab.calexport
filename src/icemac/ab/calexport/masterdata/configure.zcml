@@ -1,0 +1,32 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   xmlns:z3c="http://namespaces.zope.org/z3c"
+   xmlns:gocept="http://namespaces.gocept.com/zcml"
+   i18n_domain="icemac.addressbook">
+
+  <z3c:siteMenuItem
+     manager="icemac.ab.calendar.masterdata.interfaces.ICalendarMasterData"
+     layer="icemac.addressbook.browser.interfaces.IAddressBookLayer"
+     name="ConfigureExport"
+     title="Configure export"
+     permission="icemac.ab.calexport.EditExportMasterdata"
+     viewName="++attribute++calendar/@@edit-export-masterdata.html"
+     weight="5"
+     />
+
+  <gocept:pagelet
+      for="icemac.ab.calendar.interfaces.ICalendar"
+      layer="icemac.addressbook.browser.interfaces.IAddressBookLayer"
+      name="edit-export-masterdata.html"
+      class=".export.Masterdata"
+      permission="icemac.ab.calexport.EditExportMasterdata" />
+
+  <subscriber
+     for="*"
+     provides="
+        icemac.addressbook.browser.masterdata.interfaces.IMasterDataMenuItemOn"
+     factory=".menu.export_views" />
+
+
+</configure>

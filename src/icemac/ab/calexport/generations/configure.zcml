@@ -1,0 +1,8 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+
+  <utility
+    name="icemac.ab.calexport"
+    provides="zope.generations.interfaces.ISchemaManager"
+    component=".manager" />
+
+</configure>

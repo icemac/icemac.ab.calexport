@@ -1,0 +1,127 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           i18n_domain="icemac.addressbook">
+
+  <!-- Export Editor -->
+  <role
+      id="icemac.ab.calexport.ExportEditor"
+      title="Calendar eport editor"
+      description="Role which allows to edit masterdata of the calendar export."
+      />
+
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="zope.dublincore.view"
+     />
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="zope.View"
+     />
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.addressbook.ViewAddressBook"
+     />
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.addressbook.ViewSomePrincipals"
+     />
+
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.ab.calendar.ViewCalendar"
+     />
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.ab.calendar.ViewCategory"
+     />
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.ab.calendar.ViewEvent"
+     />
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.ab.calendar.ViewRecurringEvent"
+     />
+
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.addressbook.ViewPersonName"
+     />
+
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="z3c.preference.EditPreference" />
+
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.ab.calexport.ExportCalendar" />
+
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.ab.calexport.EditExportMasterdata" />
+
+
+  <!-- Exporter -->
+  <role
+      id="icemac.ab.calexport.Exporter"
+      title="Calendar exorter"
+      description="Role which allows to export the calendar data."
+      />
+
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="zope.dublincore.view"
+     />
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="zope.View"
+     />
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.addressbook.ViewAddressBook"
+     />
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.addressbook.ViewSomePrincipals"
+     />
+
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.ab.calendar.ViewCalendar"
+     />
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.ab.calendar.ViewCategory"
+     />
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.ab.calendar.ViewEvent"
+     />
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.ab.calendar.ViewRecurringEvent"
+     />
+
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.addressbook.ViewPersonName"
+     />
+
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="z3c.preference.EditPreference" />
+
+  <grant
+     role="icemac.ab.calexport.Exporter"
+     permission="icemac.ab.calexport.ExportCalendar" />
+
+  <subscriber
+    for="*"
+    provides="icemac.addressbook.principals.interfaces.IEditorRole"
+    factory=".roles.editor_role" />
+  <subscriber
+    for="*"
+    provides="icemac.addressbook.principals.interfaces.IVisitorRole"
+    factory=".roles.visitor_role" />
+
+
+</configure>

@@ -1,0 +1,26 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+
+  <include package="icemac.ab.calexport" />
+  <grantAll role="zope.Manager" />
+
+  <!-- Principal who is able to edit the export of the calendar -->
+  <principal
+      id="icemac.ab.calexport.ExportEditor"
+      title="calendar export editor"
+      login="cal-export-editor"
+      password="cal-export-editor"
+      />
+  <grant role="icemac.ab.calexport.ExportEditor"
+         principal="icemac.ab.calexport.ExportEditor" />
+
+  <!-- Principal who is able to export the calendar -->
+  <principal
+      id="icemac.ab.calexport.Exporter"
+      title="calendar exporter"
+      login="cal-exporter"
+      password="cal-exporter"
+      />
+  <grant role="icemac.ab.calexport.Exporter"
+         principal="icemac.ab.calexport.Exporter" />
+
+</configure>

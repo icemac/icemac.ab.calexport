@@ -1,0 +1,21 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    i18n_domain="icemac.addressbook">
+
+  <include package="grokcore.component" file="meta.zcml"/>
+  <include package="grokcore.annotation" />
+  <grok:grok package="."
+             exclude="generations" />
+
+  <interface interface=".interfaces.IExportMasterdata"
+             type="icemac.ab.calendar.interfaces.INoSecurityProxyType" />
+
+  <include file="permissions.zcml" />
+  <include file="roles.zcml" />
+
+  <include package=".browser" />
+  <include package=".generations" />
+  <include package=".masterdata" />
+
+</configure>
