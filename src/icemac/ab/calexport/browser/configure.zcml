@@ -5,4 +5,22 @@
    xmlns:z3c="http://namespaces.zope.org/z3c"
    i18n_domain="icemac.addressbook">
 
+   <browser:page
+      for="icemac.ab.calendar.interfaces.ICalendar"
+      layer="icemac.ab.calendar.browser.interfaces.ICalendarLayer"
+      name="export-month"
+      class=".export.CalendarExportView"
+      permission="icemac.ab.calexport.ExportCalendar" />
+
+  <configure package="icemac.ab.calendar.browser.renderer">
+    <browser:page
+       for=".interfaces.IEventDescription"
+       layer="icemac.ab.calendar.browser.interfaces.ICalendarLayer"
+       name="export-event"
+       template="table_event.pt"
+       class="icemac.ab.calexport.browser.renderer.ExportEvent"
+       permission="icemac.ab.calexport.ExportCalendar"
+       />
+  </configure>
+
 </configure>

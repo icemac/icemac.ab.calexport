@@ -13,10 +13,12 @@ class IExportMasterdata(zope.interface.Interface):
 
     html_head = zope.schema.Text(
         title=_('HTML to be inserted above calendar in export file'),
+        default=u'',
         required=False)
 
     html_foot = zope.schema.Text(
         title=_('HTML to be inserted below calendar in export file'),
+        default=u'',
         required=False)
 
     categories = gocept.reference.field.Set(

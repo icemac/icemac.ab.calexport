@@ -1,6 +1,7 @@
-import icemac.addressbook.testing
+import gocept.testing.assertion
 import icemac.ab.calendar.testing
 import icemac.ab.calexport
+import icemac.addressbook.testing
 
 
 ZCML_LAYER = icemac.addressbook.testing.SecondaryZCMLLayer(
@@ -30,7 +31,9 @@ class ZCMLTestCase(icemac.ab.calendar.testing.ZCMLTestCase):
 #     layer = ZODB_LAYER
 
 
-class BrowserTestCase(icemac.ab.calendar.testing.BrowserTestCase):
+class BrowserTestCase(icemac.ab.calendar.testing.BrowserTestCase,
+                      gocept.testing.assertion.Exceptions,
+                      gocept.testing.assertion.String):
     """Test case for browser tests."""
 
     layer = TEST_BROWSER_LAYER
