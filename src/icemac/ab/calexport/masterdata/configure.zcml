@@ -12,7 +12,7 @@
      title="Configure export"
      permission="icemac.ab.calexport.EditExportMasterdata"
      viewName="++attribute++calendar/@@edit-export-masterdata.html"
-     weight="5"
+     weight="50"
      />
 
   <gocept:pagelet
