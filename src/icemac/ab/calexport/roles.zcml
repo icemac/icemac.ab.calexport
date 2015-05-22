@@ -27,6 +27,10 @@
 
   <grant
      role="icemac.ab.calexport.ExportEditor"
+     permission="icemac.ab.calendar.EditCalendarAnnotations"
+     />
+  <grant
+     role="icemac.ab.calexport.ExportEditor"
      permission="icemac.ab.calendar.ViewCalendar"
      />
   <grant

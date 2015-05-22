@@ -1,4 +1,5 @@
 from icemac.addressbook.i18n import _
+import gocept.reference
 import grokcore.annotation as grok
 import icemac.ab.calendar.interfaces
 import icemac.ab.calendar.masterdata.calendar
@@ -28,3 +29,6 @@ class ExportMasterData(grok.Annotation):
 
     zope.schema.fieldproperty.createFieldProperties(
         schema, omit=['categories'])
+
+    categories = gocept.reference.ReferenceCollection(
+        'categories', ensure_integrity=True)
