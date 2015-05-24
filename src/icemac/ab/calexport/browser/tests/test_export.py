@@ -32,14 +32,30 @@ class CalendarExportViewTests(icemac.ab.calexport.testing.BrowserTestCase):
             category=self.create_category(u'calendar-export-test'),
             datetime=self.get_datetime())
 
-    def test_returns_head_calendar_and_foot(self):
+    def get_masterdata(self):
         from icemac.ab.calexport.interfaces import IExportMasterdata
-        md = IExportMasterdata(self.layer['addressbook'].calendar)
+        return IExportMasterdata(self.layer['addressbook'].calendar)
+
+    def test_returns_head_calendar_and_foot(self):
+        md = self.get_masterdata()
         md.html_head = u'<html-head>'
         md.html_foot = u'</html-foot>'
         browser = self.get_browser('cal-exporter')
         browser.open('http://localhost/ab/++attribute++calendar')
         browser.getControl('Export current month').click()
+        self.assertEqual(
+            'http://localhost/ab/++attribute++calendar/@@export-month',
+            browser.url)
         self.assertStartsWith('<html-head>', browser.contents)
         self.assertIn('calendar-export-test', browser.contents)
         self.assertEndsWith('</html-foot>', browser.contents)
+
+    def test_returns_only_events_with_selected_categories(self):
+        category = self.create_category(u'selected-category-name')
+        self.get_masterdata().categories = set([category])
+        self.create_event(category=category, datetime=self.get_datetime())
+        browser = self.get_browser('cal-exporter')
+        browser.open(
+            'http://localhost/ab/++attribute++calendar/@@export-month')
+        self.assertIn('selected-category-name', browser.contents)
+        self.assertNotIn('calendar-export-test', browser.contents)
