@@ -32,3 +32,7 @@ class ExportMasterData(grok.Annotation):
 
     categories = gocept.reference.ReferenceCollection(
         'categories', ensure_integrity=True)
+
+    def __init__(self, *args, **kw):
+        super(ExportMasterData, self).__init__(*args, **kw)
+        self.categories = set([])

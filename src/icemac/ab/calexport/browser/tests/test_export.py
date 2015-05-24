@@ -28,26 +28,34 @@ class CalendarExportViewTests(icemac.ab.calexport.testing.BrowserTestCase):
 
     def setUp(self):
         super(CalendarExportViewTests, self).setUp()
+        self.category = self.create_category(u'calendar-export-test')
         self.create_event(
-            category=self.create_category(u'calendar-export-test'),
-            datetime=self.get_datetime())
+            category=self.category, datetime=self.get_datetime())
 
     def get_masterdata(self):
         from icemac.ab.calexport.interfaces import IExportMasterdata
         return IExportMasterdata(self.layer['addressbook'].calendar)
 
-    def test_returns_head_calendar_and_foot(self):
-        md = self.get_masterdata()
-        md.html_head = u'<html-head>'
-        md.html_foot = u'</html-foot>'
+    def test_returns_no_events_if_no_categories_set(self):
         browser = self.get_browser('cal-exporter')
         browser.open('http://localhost/ab/++attribute++calendar')
         browser.getControl('Export current month').click()
         self.assertEqual(
             'http://localhost/ab/++attribute++calendar/@@export-month',
             browser.url)
+        self.assertNotIn('<dd>', browser.contents)
+
+    def test_returns_head_calendar_and_foot(self):
+        md = self.get_masterdata()
+        md.categories = set([self.category])
+        md.html_head = u'<html-head>'
+        md.html_foot = u'</html-foot>'
+        browser = self.get_browser('cal-exporter')
+        browser.open(
+            'http://localhost/ab/++attribute++calendar/@@export-month')
         self.assertStartsWith('<html-head>', browser.contents)
-        self.assertIn('calendar-export-test', browser.contents)
+        self.assertEllipsis(
+            '...<dd> calendar-export-test </dd>...', browser.contents)
         self.assertEndsWith('</html-foot>', browser.contents)
 
     def test_returns_only_events_with_selected_categories(self):
@@ -57,5 +65,6 @@ class CalendarExportViewTests(icemac.ab.calexport.testing.BrowserTestCase):
         browser = self.get_browser('cal-exporter')
         browser.open(
             'http://localhost/ab/++attribute++calendar/@@export-month')
-        self.assertIn('selected-category-name', browser.contents)
+        self.assertEllipsis(
+            '...<dd> selected-category-name </dd>...', browser.contents)
         self.assertNotIn('calendar-export-test', browser.contents)
