@@ -28,15 +28,18 @@ class CalendarExportViewTests(icemac.ab.calexport.testing.BrowserTestCase):
 
     def setUp(self):
         super(CalendarExportViewTests, self).setUp()
+        self.ab = self.layer['addressbook']
         self.category = self.create_category(u'calendar-export-test')
         self.create_event(
             category=self.category, datetime=self.get_datetime())
+        self.get_masterdata().categories = set([self.category])
 
     def get_masterdata(self):
         from icemac.ab.calexport.interfaces import IExportMasterdata
         return IExportMasterdata(self.layer['addressbook'].calendar)
 
     def test_returns_no_events_if_no_categories_set(self):
+        self.get_masterdata().categories = set()
         browser = self.get_browser('cal-exporter')
         browser.open('http://localhost/ab/++attribute++calendar')
         browser.getControl('Export current month').click()
@@ -68,3 +71,21 @@ class CalendarExportViewTests(icemac.ab.calexport.testing.BrowserTestCase):
         self.assertEllipsis(
             '...<dd> selected-category-name </dd>...', browser.contents)
         self.assertNotIn('calendar-export-test', browser.contents)
+
+    def test_sets_special_css_class_on_selected_events(self):
+        field = self.create_special_field(self.get_masterdata())
+        self.create_event(**{'category': self.category,
+                             'datetime': self.get_datetime(),
+                             field.__name__: True})
+        browser = self.get_browser('cal-exporter')
+        browser.open(
+            'http://localhost/ab/++attribute++calendar/@@export-month')
+        self.assertEllipsis('''...
+<dd>
+  calendar-export-test
+</dd>
+...
+<dd class="special">
+  calendar-export-test
+</dd>
+...''', browser.contents)

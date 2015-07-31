@@ -1,11 +1,32 @@
-import gocept.reference.field
 from icemac.addressbook.i18n import _
+import gocept.reference.field
 import icemac.ab.calendar.interfaces
+import icemac.addressbook.interfaces
+import zc.sourcefactory.basic
 import zope.interface
 import zope.schema
 
 
 PACKAGE_ID = 'icemac.ab.calexport'
+
+
+class EventBooleanFields(zc.sourcefactory.basic.BasicSourceFactory):
+    """User defined boolean fields on IEvent."""
+
+    def getValues(self):
+        event_entity = icemac.addressbook.interfaces.IEntity(
+            icemac.ab.calendar.interfaces.IEvent)
+        for name, field in event_entity.getRawFields():
+            if not icemac.addressbook.interfaces.IField.providedBy(field):
+                continue
+            if field.type != u'Bool':
+                continue
+            yield field
+
+    def getTitle(self, value):
+        return value.title
+
+event_boolean_fields = EventBooleanFields()
 
 
 class IExportMasterdata(zope.interface.Interface):
@@ -27,3 +48,9 @@ class IExportMasterdata(zope.interface.Interface):
         value_type=zope.schema.Choice(
             title=_('event category'),
             source=icemac.ab.calendar.interfaces.category_source))
+
+    special_field = zope.schema.Choice(
+        title=_('Use this Boolean field to determine whether the event should '
+                'be rendered with the `special` CSS class'),
+        source=event_boolean_fields,
+        required=False)

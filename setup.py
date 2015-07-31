@@ -49,6 +49,7 @@ setuptools.setup(
     zip_safe=False,
     install_requires=[
         'icemac.ab.calendar >= 1.7.0.dev0',
+        'icemac.addressbook >= 2.6.0.dev0',
         'setuptools',
     ],
     extras_require=dict(

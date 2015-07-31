@@ -39,3 +39,33 @@ class MasterdataSecurityTests(icemac.ab.calexport.testing.BrowserTestCase):
             browser.open('http://localhost/ab/++attribute++calendar/'
                          '@@edit-export-masterdata.html')
         self.assertEqual('HTTP Error 403: Forbidden', str(err.exception))
+
+
+class ExportMasterDataTests(icemac.ab.calexport.testing.ZODBTestCase):
+    """Testing ..export.ExportMasterData."""
+
+    def makeOne(self):
+        from ..export import ExportMasterData
+        return ExportMasterData()
+
+    def test_special_field_stores_and_returns_a_field_reference(self):
+        md = self.makeOne()
+        # None by default
+        self.assertIsNone(md.special_field)
+        field = self.create_special_field(md)
+        self.assertEqual(field, md.special_field)
+        # special_field is a property which stores a field reference
+        self.assertEqual(
+            'IcemacAbCalendarEventEvent###Field-1', md._special_field)
+        # Reset to None is possible, too
+        md.special_field = None
+        self.assertIsNone(md.special_field)
+        self.assertIsNone(md._special_field)
+
+    def test_special_field_does_not_break_on_a_deleted_field(self):
+        from icemac.addressbook.interfaces import IEntity
+        from icemac.ab.calendar.interfaces import IEvent
+        md = self.makeOne()
+        field = self.create_special_field(md)
+        IEntity(IEvent).removeField(field)
+        self.assertIsNone(md.special_field)

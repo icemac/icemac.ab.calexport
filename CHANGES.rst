@@ -7,6 +7,8 @@
 
 - Fix error on export if no categories where selected in master data.
 
+- Add ability to render a special CSS class for certain events.
+
 
 1.0.0 (2015-05-24)
 ==================
