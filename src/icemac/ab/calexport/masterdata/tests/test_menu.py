@@ -1,19 +1,20 @@
 from __future__ import unicode_literals
-import icemac.ab.calexport.testing
-import icemac.addressbook.browser.testing
+import pytest
 
 
-class MasterDataSelectedCheckerTests(
-        icemac.addressbook.browser.testing.SiteMenuTestMixIn,
-        icemac.ab.calexport.testing.BrowserTestCase):
-    """Testing ..menu.export_views"""
+@pytest.fixture(scope='function')
+def master_data_menu(address_book, browser, sitemenu):
+    """Fixture to test the calendar export master data menu."""
+    browser.login('cal-export-editor')
+    return sitemenu(browser, 1, 'Master data', browser.CALENDAR_MASTERDATA_URL)
 
-    menu_item_index = 1
-    menu_item_title = 'Master data'
-    menu_item_URL = 'http://localhost/ab/@@calendar-masterdata.html'
-    login_as = 'cal-export-editor'
 
-    def test_master_data_tab_is_selected_on_export_masterdata(self):
-        self.browser.open('http://localhost/ab/++attribute++calendar/'
-                          '@@edit-export-masterdata.html')
-        self.assertIsSelected()
+def test_menu__master_data_menu__1(master_data_menu):
+    """Asserting that the menu with the index 4 is calendar master data."""
+    master_data_menu.assert_correct_menu_item_is_tested()
+
+
+def test_menu__master_data_menu__2(master_data_menu):
+    """The master data tab is selected on the export master data."""
+    assert master_data_menu.item_selected(
+        master_data_menu.browser.CALEXPORT_MASTER_DATA_URL)

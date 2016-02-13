@@ -1,91 +1,102 @@
-import icemac.ab.calexport.testing
+from ..export import CalendarActions
+from icemac.ab.calexport.testing import get_masterdata
+import pytest
 
 
-class CalendarActionsTests(icemac.ab.calexport.testing.BrowserTestCase):
-    """Testing ..export.CalendarActions."""
-
-    @property
-    def button(self):
-        from ..export import CalendarActions
-        return CalendarActions.export_button_title
-
-    def test_button_is_not_rendered_for_calendar_editor(self):
-        # Because he is not allowed to export.
-        browser = self.get_browser('cal-editor')
-        browser.open('http://localhost/ab/++attribute++calendar')
-        with self.assertRaises(LookupError):
-            browser.getControl(self.button)
-
-    def test_button_is_rendered_for_calendar_exporter(self):
-        browser = self.get_browser('cal-exporter')
-        browser.open('http://localhost/ab/++attribute++calendar')
-        with self.assertNothingRaised():
-            browser.getControl(self.button)
+# Fixtures
 
 
-class CalendarExportViewTests(icemac.ab.calexport.testing.BrowserTestCase):
-    """Testing ..export.CalendarExportView."""
+@pytest.fixture('function')
+def sample_category(address_book, CategoryFactory):
+    """A sample event category to be used in tests."""
+    return CategoryFactory(address_book, u'calendar-export-test')
 
-    def setUp(self):
-        super(CalendarExportViewTests, self).setUp()
-        self.ab = self.layer['addressbook']
-        self.category = self.create_category(u'calendar-export-test')
-        self.create_event(
-            category=self.category, datetime=self.get_datetime())
-        self.get_masterdata().categories = set([self.category])
 
-    def get_masterdata(self):
-        from icemac.ab.calexport.interfaces import IExportMasterdata
-        return IExportMasterdata(self.layer['addressbook'].calendar)
+@pytest.fixture('function')
+def export_address_book(
+        address_book, sample_category, EventFactory, DateTime):
+    """Address boo with some export data in it.
 
-    def test_returns_no_events_if_no_categories_set(self):
-        self.get_masterdata().categories = set()
-        browser = self.get_browser('cal-exporter')
-        browser.open('http://localhost/ab/++attribute++calendar')
-        browser.getControl('Export current month').click()
-        self.assertEqual(
-            'http://localhost/ab/++attribute++calendar/@@export-month',
-            browser.url)
-        self.assertNotIn('<dd>', browser.contents)
+    It defines the `sample_category` to be used for export of the events.
+    """
+    EventFactory(address_book, category=sample_category,
+                 datetime=DateTime.now)
+    get_masterdata(address_book).categories = set([sample_category])
+    return address_book
 
-    def test_returns_head_calendar_and_foot(self):
-        md = self.get_masterdata()
-        md.categories = set([self.category])
-        md.html_head = u'<html-head>'
-        md.html_foot = u'</html-foot>'
-        browser = self.get_browser('cal-exporter')
-        browser.open(
-            'http://localhost/ab/++attribute++calendar/@@export-month')
-        self.assertStartsWith('<html-head>', browser.contents)
-        self.assertEllipsis(
-            '...<dd> calendar-export-test </dd>...', browser.contents)
-        self.assertEndsWith('</html-foot>', browser.contents)
 
-    def test_returns_only_events_with_selected_categories(self):
-        category = self.create_category(u'selected-category-name')
-        self.get_masterdata().categories = set([category])
-        self.create_event(category=category, datetime=self.get_datetime())
-        browser = self.get_browser('cal-exporter')
-        browser.open(
-            'http://localhost/ab/++attribute++calendar/@@export-month')
-        self.assertEllipsis(
-            '...<dd> selected-category-name </dd>...', browser.contents)
-        self.assertNotIn('calendar-export-test', browser.contents)
+# Tests
 
-    def test_sets_special_css_class_on_selected_events(self):
-        field = self.create_special_field(self.get_masterdata())
-        self.create_event(**{'category': self.category,
-                             'datetime': self.get_datetime(),
-                             field.__name__: True})
-        browser = self.get_browser('cal-exporter')
-        browser.open(
-            'http://localhost/ab/++attribute++calendar/@@export-month')
-        self.assertEllipsis('''...
-<dd>
-  calendar-export-test
-</dd>
-...
-<dd class="special">
-  calendar-export-test
-</dd>
-...''', browser.contents)
+
+def test_export__CalendarActions__update__1(address_book, browser):
+    """It renders the export button a calendar exporter user."""
+    browser.login('cal-exporter')
+    browser.open(browser.CALENDAR_OVERVIEW_URL)
+    assert browser.getControl(CalendarActions.export_button_title)
+
+
+def test_export__CalendarActions__update__2(address_book, browser):
+    """It does not rendered the export button for a calendar editor user.
+
+    Because he is not allowed to export.
+    """
+    browser.login('cal-editor')
+    browser.open(browser.CALENDAR_OVERVIEW_URL)
+    with pytest.raises(LookupError):
+        browser.getControl(CalendarActions.export_button_title)
+
+
+def test_export__CalendarExportView__1(export_address_book, browser):
+    """It returns no events if no categories are set in master data."""
+    get_masterdata(export_address_book).categories = set()
+    browser.login('cal-exporter')
+    browser.open(browser.CALENDAR_OVERVIEW_URL)
+    browser.getControl('Export current month').click()
+    assert browser.CALEXPORT_MONTH_EXPORT_URL == browser.url
+    assert '<dd>' not in browser.contents
+
+
+def test_export__CalendarExportView__2(
+        export_address_book, sample_category, browser):
+    """It returns header, calendar and footer."""
+    md = get_masterdata(export_address_book)
+    md.categories = set([sample_category])
+    md.html_head = u'<html-head>'
+    md.html_foot = u'</html-foot>'
+    browser.login('cal-exporter')
+    browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
+    assert browser.contents.startswith('<html-head>')
+    assert (['calendar-export-test'] ==
+            [x.strip() for x in browser.etree.xpath('//dd/text()')])
+    assert browser.contents.endswith('</html-foot>')
+
+
+def test_export__CalendarExportView__3(
+        export_address_book, CategoryFactory, EventFactory, DateTime, browser):
+    """It returns only events having the selected categories."""
+    category = CategoryFactory(export_address_book, u'selected-category-name')
+    get_masterdata(export_address_book).categories = set([category])
+    EventFactory(export_address_book, category=category, datetime=DateTime.now)
+    browser.login('cal-exporter')
+    browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
+    assert (['selected-category-name'] ==
+            [x.strip() for x in browser.etree.xpath('//dd/text()')])
+    assert 'calendar-export-test' not in browser.contents
+
+
+def test_export__CalendarExportView__4(
+        address_book, sample_category, EventFactory, SpecialFieldFactory,
+        DateTime, browser):
+    """It sets the CSS class ``special`` on events where the special field ...
+
+    ... is set.
+    """
+    get_masterdata(address_book).categories = set([sample_category])
+    EventFactory(address_book, **{
+        'category': sample_category,
+        'datetime': DateTime.now,
+        SpecialFieldFactory(address_book).__name__: True})
+    browser.login('cal-exporter')
+    browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
+    assert ['special'] == [x.attrib.get('class')
+                           for x in browser.etree.xpath('//dd')]
