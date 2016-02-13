@@ -1,6 +1,7 @@
 from icemac.addressbook.browser.base import can_access_uri_part
 from icemac.addressbook.i18n import _
 import grokcore.component as grok
+import icemac.ab.calendar.browser.calendar
 import icemac.ab.calendar.browser.interfaces
 import z3c.form.button
 import zope.security.proxy
