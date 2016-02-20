@@ -67,7 +67,7 @@
   <!-- Exporter -->
   <role
       id="icemac.ab.calexport.Exporter"
-      title="Calendar exorter"
+      title="Calendar exporter"
       description="Role which allows to export the calendar data."
       />
 
