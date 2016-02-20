@@ -6,7 +6,8 @@
   <include package="grokcore.component" file="meta.zcml"/>
   <include package="grokcore.annotation" />
   <grok:grok package="."
-             exclude="generations" />
+             exclude="generations
+                      conftest" />
 
   <interface interface=".interfaces.IExportMasterdata"
              type="icemac.ab.calendar.interfaces.INoSecurityProxyType" />
