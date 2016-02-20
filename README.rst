@@ -5,7 +5,7 @@ HTML calendar export.
 
 .. _`icemac.ab.calendar` : http://pypi.python.org/pypi/icemac.ab.calendar
 
-Copyright (c) 2015 Michael Howitz
+Copyright (c) 2015 - 2016 Michael Howitz
 
 All Rights Reserved.
 
