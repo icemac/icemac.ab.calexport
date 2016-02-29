@@ -9,7 +9,7 @@
 
 - Add ability to render a special CSS class for certain events.
 
-- Use `py.test` fixtures in the tests + convert tests to us the class-less
+- Use `py.test` fixtures in the tests + convert tests to use the class-less
   approach.
 
 
