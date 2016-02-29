@@ -42,14 +42,6 @@ def test_export__Masterdata__3(address_book, browser):
     assert 'HTTP Error 403: Forbidden' == str(err.value)
 
 
-# class ExportMasterDataTests(icemac.ab.calexport.testing.ZODBTestCase):
-#     """Testing ..export.ExportMasterData."""
-
-#     def makeOne(self):
-#
-#         return ExportMasterData()
-
-
 def test_export__ExportMasterData__special_field__1(
         address_book, SpecialFieldFactory):
     """It stores and returns a field reference."""
