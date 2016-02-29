@@ -42,20 +42,26 @@ class ExportMasterData(grok.Annotation):
 
     @property
     def special_field(self):
-        if self._special_field is None:
+        return self._field_getter('_special_field')
+
+    @special_field.setter
+    def special_field(self, value):
+        self._field_setter('_special_field', value)
+
+    def _field_getter(self, name):
+        value = getattr(self, name)
+        if value is None:
             return None
         try:
-            return icemac.addressbook.fieldsource.untokenize(
-                self._special_field)[1]
+            return icemac.addressbook.fieldsource.untokenize(value)[1]
         except KeyError:
             return None
 
-    @special_field.setter
-    def special_field(self, field):
-        if field is None:
-            self._special_field = None
+    def _field_setter(self, name, value):
+        if value is None:
+            setattr(self, name, None)
         else:
             event_entity = icemac.addressbook.interfaces.IEntity(
                 icemac.ab.calendar.interfaces.IEvent)
-            self._special_field = icemac.addressbook.fieldsource.tokenize(
-                event_entity, field.__name__)
+            setattr(self, name, icemac.addressbook.fieldsource.tokenize(
+                event_entity, value.__name__))
