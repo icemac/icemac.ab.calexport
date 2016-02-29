@@ -42,6 +42,11 @@ class IExportMasterdata(zope.interface.Interface):
         default=u'',
         required=False)
 
+    filename = zope.schema.TextLine(
+        title=_('Name for the generated file when downloading'),
+        default=u'export.html',
+        required=True)
+
     categories = gocept.reference.field.Set(
         title=_('Export only events having one of these categories'),
         required=False,

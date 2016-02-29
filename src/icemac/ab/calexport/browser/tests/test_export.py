@@ -65,6 +65,8 @@ def test_export__CalendarExportView__2(
     md.html_foot = u'</html-foot>'
     browser.login('cal-exporter')
     browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
+    assert ('attachment; filename=export.html' ==
+            browser.headers['content-disposition'])
     assert browser.contents.startswith('<html-head>')
     assert (['calendar-export-test'] ==
             [x.strip() for x in browser.etree.xpath('//dd/text()')])
@@ -100,3 +102,13 @@ def test_export__CalendarExportView__4(
     browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
     assert ['special'] == [x.attrib.get('class')
                            for x in browser.etree.xpath('//dd')]
+
+
+def test_export__CalendarExportView__5(export_address_book, browser):
+    """It respects the file name set in master data."""
+    md = get_masterdata(export_address_book)
+    md.filename = u'cal.htm'
+    browser.login('cal-exporter')
+    browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
+    assert ('attachment; filename=cal.htm' ==
+            browser.headers['content-disposition'])

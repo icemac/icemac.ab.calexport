@@ -13,14 +13,17 @@ def test_export__Masterdata__1(address_book, CategoryFactory, browser):
     browser.open(browser.CALENDAR_MASTERDATA_URL)
     browser.getLink('Configure export').click()
     assert browser.CALEXPORT_MASTER_DATA_URL == browser.url
+    assert browser.getControl('Name for the generated').value == 'export.html'
     browser.getControl('HTML to be inserted above').value = '<html>cal'
     browser.getControl('foo').selected = True
+    browser.getControl('Name for the generated').value = 'events.html'
     browser.getControl('Apply').click()
     assert 'Data successfully updated.' == browser.message
     browser.open(browser.CALEXPORT_MASTER_DATA_URL)
     assert '<html>cal' == browser.getControl('HTML to be inserted above').value
     assert browser.getControl('foo').selected
     assert not browser.getControl('bar').selected
+    assert browser.getControl('Name for the generated').value == 'events.html'
 
 
 def test_export__Masterdata__2(address_book, browser):
