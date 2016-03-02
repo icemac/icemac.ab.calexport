@@ -17,7 +17,7 @@ def RecurredEventFactory(
                 'category': CategoryFactory(address_book, u'cat')}
         if with_special_field:
             recurring_special_field = SpecialFieldFactory(
-                address_book, IRecurringEvent, set_on_masterdata=False)
+                address_book, IRecurringEvent)
             data[recurring_special_field.__name__] = special_field_value
 
         event = RecurringEventFactory(address_book, **data)
