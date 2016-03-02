@@ -87,7 +87,7 @@ def test_export__CalendarExportView__3(
 
 
 def test_export__CalendarExportView__4(
-        address_book, sample_category, EventFactory, SpecialFieldFactory,
+        address_book, sample_category, EventFactory, MasterDataFieldFactory,
         DateTime, browser):
     """It sets the CSS class ``special`` on events where the special field ...
 
@@ -97,7 +97,7 @@ def test_export__CalendarExportView__4(
     EventFactory(address_book, **{
         'category': sample_category,
         'datetime': DateTime.now,
-        SpecialFieldFactory(address_book).__name__: True})
+        MasterDataFieldFactory(address_book, 'special_field').__name__: True})
     browser.login('cal-exporter')
     browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
     assert ['special'] == [x.attrib.get('class')

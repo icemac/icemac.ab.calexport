@@ -42,25 +42,41 @@ def test_export__Masterdata__3(address_book, browser):
     assert 'HTTP Error 403: Forbidden' == str(err.value)
 
 
+@pytest.mark.parametrize(
+    'attr_name,field_type,field_title', [
+        ['special_field', 'Bool', 'Special?'],
+    ])
 def test_export__ExportMasterData__special_field__1(
-        address_book, SpecialFieldFactory):
+        address_book, MasterDataFieldFactory,
+        attr_name, field_type, field_title):
     """It stores and returns a field reference."""
     md = get_masterdata(address_book)
     # None by default
-    assert None is md.special_field
-    field = SpecialFieldFactory(address_book)
-    assert field == md.special_field
-    # `special_field` is a property which stores a field reference
-    assert 'IcemacAbCalendarEventEvent###Field-1' == md._special_field
+    assert None is getattr(md, attr_name)
+    field = MasterDataFieldFactory(
+        address_book, attr_name, field_type=unicode(field_type),
+        field_title=unicode(field_title))
+    assert field == getattr(md, attr_name)
+    # The attribute is a property which stores a field reference
+    private_attr_name = '_{}'.format(attr_name)
+    assert ('IcemacAbCalendarEventEvent###Field-1' ==
+            getattr(md, private_attr_name))
     # Reset to None is possible, too
-    md.special_field = None
-    assert None is md.special_field
-    assert None is md._special_field
+    setattr(md, attr_name, None)
+    assert None is getattr(md, attr_name)
+    assert None is getattr(md, private_attr_name)
 
 
+@pytest.mark.parametrize(
+    'attr_name,field_type,field_title', [
+        ['special_field', 'Bool', 'Special?'],
+    ])
 def test_export__ExportMasterData__special_field__2(
-        address_book, SpecialFieldFactory):
+        address_book, MasterDataFieldFactory,
+        attr_name, field_type, field_title):
     """It does not break on a deleted field."""
-    field = SpecialFieldFactory(address_book)
+    field = MasterDataFieldFactory(
+        address_book, attr_name, field_type=unicode(field_type),
+        field_title=unicode(field_title))
     IEntity(IEvent).removeField(field)
-    assert None is get_masterdata(address_book).special_field
+    assert None is getattr(get_masterdata(address_book), attr_name)

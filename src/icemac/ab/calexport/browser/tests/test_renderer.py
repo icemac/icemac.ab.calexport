@@ -6,18 +6,19 @@ import pytest
 
 @pytest.fixture('session')
 def RecurredEventFactory(
-        DateTime, CategoryFactory, SpecialFieldFactory, RecurringEventFactory):
+        DateTime, CategoryFactory, MasterDataFieldFactory,
+        RecurringEventFactory):
     """Create a recurred event."""
     def get_recurred_event(
             address_book, with_special_field, special_field_value=None):
-        SpecialFieldFactory(address_book)  # special field on IEvent
+        MasterDataFieldFactory(address_book, 'special_field')  # on IEvent
         event_start = DateTime(2015, 7, 30, 20)
         data = {'datetime': event_start,
                 'period': 'weekly',
                 'category': CategoryFactory(address_book, u'cat')}
         if with_special_field:
-            recurring_special_field = SpecialFieldFactory(
-                address_book, IRecurringEvent)
+            recurring_special_field = MasterDataFieldFactory(
+                address_book, 'special_field', IRecurringEvent)
             data[recurring_special_field.__name__] = special_field_value
 
         event = RecurringEventFactory(address_book, **data)

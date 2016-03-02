@@ -25,20 +25,26 @@ def browser(browserWsgiAppS):
 
 
 @pytest.fixture('session')
-def SpecialFieldFactory(FieldFactory):
+def MasterDataFieldFactory(FieldFactory):
     """Create a field and add it as `special_field` to export master data."""
-    def create_special_field(address_book, iface=IEvent):
+    def create_masterdata_field(
+            address_book, attr_name, iface=IEvent, field_type=u'Bool',
+            field_title=u'Special?'):
         """Parameters:
 
+        attr_name ... name of the attribute to put the field on e. g.
+                      "special_field"
         iface ... interface of the entity for which the field should be created
+        field_type ... type of the field, see `FieldTypeSource`.
+        field_title ... title for the field
         """
-        field = FieldFactory(address_book, iface, u'Bool', u'Special?')
+        field = FieldFactory(address_book, iface, field_type, field_title)
         if iface == IEvent:
             # Only fields on IEvent can be set on master data, not the ones on
             # IRecurringEvent!
-            get_masterdata(address_book).special_field = field
+            setattr(get_masterdata(address_book), attr_name, field)
         return field
-    return create_special_field
+    return create_masterdata_field
 
 
 # Infrastructure fixtures
