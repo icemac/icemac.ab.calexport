@@ -36,42 +36,6 @@ def ExportEventFactory(utc_time_zone_pref):
     return get_export_event
 
 
-# class ExportEventDdClassTests(icemac.ab.calexport.testing.ZODBTestCase):
-#     """Testing ..renderer.ExportEvent.dd_class()"""
-
-#     def setUp():
-#         super(ExportEventDdClassTests, self).setUp()
-#         calendar = self.layer['addressbook'].calendar
-#         self.create_special_field(
-#             icemac.ab.calexport.interfaces.IExportMasterdata(calendar))
-
-#     def callMUT(self, event):
-#         from icemac.ab.calendar.browser.renderer.interfaces import (
-#             IEventDescription)
-#         from ..renderer import ExportEvent
-#         get_time_zone_name = (
-#             'icemac.addressbook.preferences.utils.get_time_zone_name')
-#         with patch(get_time_zone_name, return_value='UTC'):
-#             context = IEventDescription(event)
-#         view = ExportEvent()
-#         view.context = context
-#         return view.dd_class()
-
-#     def getRecurredEvent(self, with_special_field, special_field_value=None):
-#         from icemac.ab.calendar.interfaces import IRecurringEvent
-#         event_start = self.get_datetime((2015, 7, 30, 20))
-#         data = {'datetime': event_start,
-#                 'period': 'weekly',
-#                 'category': self.create_category(u'cat')}
-#         if with_special_field:
-#             recurring_special_field = self.create_special_field(
-#                 iface=IRecurringEvent, set_on_masterdata=False, md=None)
-#             data[recurring_special_field.__name__] = special_field_value
-
-#         event = self.create_recurring_event(**data)
-#         return event.get_events(
-#             event_start, self.get_datetime((2015, 7, 31, 0))).next()
-
 def test_renderer__ExportEvent__dd_class__1(
         address_book, RecurredEventFactory, ExportEventFactory):
     """It returns `"special"` for recurred events.
