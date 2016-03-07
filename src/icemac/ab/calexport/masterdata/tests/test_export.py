@@ -45,6 +45,7 @@ def test_export__Masterdata__3(address_book, browser):
 @pytest.mark.parametrize(
     'attr_name,field_type,field_title', [
         ['special_field', 'Bool', 'Special?'],
+        ['url_field', 'URI', 'URL'],
     ])
 def test_export__ExportMasterData__special_field__1(
         address_book, MasterDataFieldFactory,
@@ -70,6 +71,7 @@ def test_export__ExportMasterData__special_field__1(
 @pytest.mark.parametrize(
     'attr_name,field_type,field_title', [
         ['special_field', 'Bool', 'Special?'],
+        ['url_field', 'URI', 'URL'],
     ])
 def test_export__ExportMasterData__special_field__2(
         address_book, MasterDataFieldFactory,

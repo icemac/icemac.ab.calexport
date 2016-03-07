@@ -31,6 +31,7 @@ class EventTypedFields(zc.sourcefactory.basic.BasicSourceFactory):
         return value.title
 
 event_boolean_fields = EventTypedFields(u'Bool')
+event_url_fields = EventTypedFields(u'URI')
 
 
 class IExportMasterdata(zope.interface.Interface):
@@ -62,4 +63,10 @@ class IExportMasterdata(zope.interface.Interface):
         title=_('Use this Boolean field to determine whether the event should '
                 'be rendered with the `special` CSS class'),
         source=event_boolean_fields,
+        required=False)
+
+    url_field = zope.schema.Choice(
+        title=_('Use this URL field to render an external link in the '
+                'exported calender file'),
+        source=event_url_fields,
         required=False)

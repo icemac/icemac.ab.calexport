@@ -32,7 +32,7 @@ class ExportEvent(icemac.ab.calendar.browser.renderer.table.TableEvent):
             unsave_calendar)
 
     def action_url(self):
-        return None
+        return self._get_field_value('url_field', default=None)
 
     def info(self):
         return []

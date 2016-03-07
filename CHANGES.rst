@@ -9,6 +9,8 @@
 
 - Add ability to render a special CSS class for certain events.
 
+- Add ability to render an event as a hyperlink.
+
 - Use `py.test` fixtures in the tests + convert tests to use the class-less
   approach.
 

@@ -30,11 +30,12 @@ class ExportMasterData(grok.Annotation):
     grok.provides(schema)
 
     zope.schema.fieldproperty.createFieldProperties(
-        schema, omit=['categories', 'special_field'])
+        schema, omit=['categories', 'special_field', 'url_field'])
 
     categories = gocept.reference.ReferenceCollection(
         'categories', ensure_integrity=True)
     _special_field = None
+    _url_field = None
 
     def __init__(self, *args, **kw):
         super(ExportMasterData, self).__init__(*args, **kw)
@@ -47,6 +48,14 @@ class ExportMasterData(grok.Annotation):
     @special_field.setter
     def special_field(self, value):
         self._field_setter('_special_field', value)
+
+    @property
+    def url_field(self):
+        return self._field_getter('_url_field')
+
+    @url_field.setter
+    def url_field(self, value):
+        self._field_setter('_url_field', value)
 
     def _field_getter(self, name):
         value = getattr(self, name)
