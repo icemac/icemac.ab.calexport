@@ -10,8 +10,12 @@ import zope.schema
 PACKAGE_ID = 'icemac.ab.calexport'
 
 
-class EventBooleanFields(zc.sourcefactory.basic.BasicSourceFactory):
-    """User defined boolean fields on IEvent."""
+class EventTypedFields(zc.sourcefactory.basic.BasicSourceFactory):
+    """User defined fields on IEvent of type `field_type`."""
+
+    def __init__(self, field_type):
+        super(EventTypedFields, self).__init__()
+        self._field_type = field_type
 
     def getValues(self):
         event_entity = icemac.addressbook.interfaces.IEntity(
@@ -19,14 +23,14 @@ class EventBooleanFields(zc.sourcefactory.basic.BasicSourceFactory):
         for name, field in event_entity.getRawFields():
             if not icemac.addressbook.interfaces.IField.providedBy(field):
                 continue
-            if field.type != u'Bool':
+            if field.type != self._field_type:
                 continue
             yield field
 
     def getTitle(self, value):
         return value.title
 
-event_boolean_fields = EventBooleanFields()
+event_boolean_fields = EventTypedFields(u'Bool')
 
 
 class IExportMasterdata(zope.interface.Interface):

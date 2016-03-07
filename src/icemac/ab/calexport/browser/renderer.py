@@ -38,15 +38,18 @@ class ExportEvent(icemac.ab.calendar.browser.renderer.table.TableEvent):
         return []
 
     def dd_class(self):
-        special_field = self.masterdata.special_field
-        if not special_field:
-            return None
+        is_special = self._get_field_value('special_field', default=False)
+        return 'special' if is_special else None
 
+    def _get_field_value(self, name, default):
+        field = getattr(self.masterdata, name)
+        if not field:
+            return default
         event = icemac.ab.calendar.interfaces.IEvent(self.context)
         field = icemac.addressbook.entities.get_bound_schema_field(
-            event, None, special_field, default_attrib_fallback=False)
+            event, None, field, default_attrib_fallback=False)
         try:
-            is_special = field.get(field.context)
+            value = field.get(field.context)
         except AttributeError:  # Recurring event has no matching field:
-            is_special = False
-        return 'special' if is_special else None
+            value = default
+        return value

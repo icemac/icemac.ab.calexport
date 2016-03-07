@@ -4,25 +4,46 @@ from icemac.ab.calendar.interfaces import IRecurringEvent
 import pytest
 
 
+def get_recurred_event_with_custom_field(
+        with_field, name, value, address_book, MasterDataFieldFactory,
+        RecurringEventFactory, DateTime, CategoryFactory):
+    """Get a recurred event maybe having a custom field."""
+    MasterDataFieldFactory(address_book, name)  # on IEvent
+    event_start = DateTime(2015, 7, 30, 20)
+    data = {'datetime': event_start,
+            'period': 'weekly',
+            'category': CategoryFactory(address_book, u'cat')}
+    if with_field:
+        field = MasterDataFieldFactory(address_book, name, IRecurringEvent)
+        data[field.__name__] = value
+
+    event = RecurringEventFactory(address_book, **data)
+    return event.get_events(event_start, DateTime(2015, 7, 31, 0)).next()
+
+
 @pytest.fixture('session')
-def RecurredEventFactory(
+def SpecialFieldRecurredEventFactory(
         DateTime, CategoryFactory, MasterDataFieldFactory,
         RecurringEventFactory):
-    """Create a recurred event."""
-    def get_recurred_event(
-            address_book, with_special_field, special_field_value=None):
-        MasterDataFieldFactory(address_book, 'special_field')  # on IEvent
-        event_start = DateTime(2015, 7, 30, 20)
-        data = {'datetime': event_start,
-                'period': 'weekly',
-                'category': CategoryFactory(address_book, u'cat')}
-        if with_special_field:
-            recurring_special_field = MasterDataFieldFactory(
-                address_book, 'special_field', IRecurringEvent)
-            data[recurring_special_field.__name__] = special_field_value
+    """Create a recurred event with a `special_field`."""
+    def get_recurred_event(address_book, with_field=False, value=None):
+        return get_recurred_event_with_custom_field(
+            with_field, 'special_field', value, address_book,
+            MasterDataFieldFactory, RecurringEventFactory, DateTime,
+            CategoryFactory)
+    return get_recurred_event
 
-        event = RecurringEventFactory(address_book, **data)
-        return event.get_events(event_start, DateTime(2015, 7, 31, 0)).next()
+
+@pytest.fixture('session')
+def URLFieldRecurredEventFactory(
+        DateTime, CategoryFactory, MasterDataFieldFactory,
+        RecurringEventFactory):
+    """Create a recurred event with a URL field."""
+    def get_recurred_event(address_book, with_field=False, value=None):
+        return get_recurred_event_with_custom_field(
+            with_field, 'url_field', value, address_book,
+            MasterDataFieldFactory, RecurringEventFactory, DateTime,
+            CategoryFactory)
     return get_recurred_event
 
 
@@ -37,35 +58,35 @@ def ExportEventFactory(utc_time_zone_pref):
 
 
 def test_renderer__ExportEvent__dd_class__1(
-        address_book, RecurredEventFactory, ExportEventFactory):
+        address_book, SpecialFieldRecurredEventFactory, ExportEventFactory):
     """It returns `"special"` for recurred events.
 
     Condition: the `special_field` equivalent on the recurring event has
                a value of `True`.
     """
-    revent = RecurredEventFactory(
-        address_book, with_special_field=True, special_field_value=True)
+    revent = SpecialFieldRecurredEventFactory(
+        address_book, with_field=True, value=True)
     assert 'special' == ExportEventFactory(revent).dd_class()
 
 
 def test_renderer__ExportEvent__dd_class__2(
-        address_book, RecurredEventFactory, ExportEventFactory):
+        address_book, SpecialFieldRecurredEventFactory, ExportEventFactory):
     """It returns `None` for recurred events.
 
     Condition: the `special_field` equivalent on the recurring event has
                a false like value.
     """
-    revent = RecurredEventFactory(
-        address_book, with_special_field=True, special_field_value=None)
+    revent = SpecialFieldRecurredEventFactory(
+        address_book, with_field=True, value=None)
     assert None is ExportEventFactory(revent).dd_class()
 
 
 def test_renderer__ExportEvent__dd_class__3(
-        address_book, RecurredEventFactory, ExportEventFactory):
+        address_book, SpecialFieldRecurredEventFactory, ExportEventFactory):
     """It returns `None` for recurred events.
 
     Condition: there is no `special_field` equivalent on the recurring
                event.
     """
-    revent = RecurredEventFactory(address_book, with_special_field=False)
+    revent = SpecialFieldRecurredEventFactory(address_book, with_field=False)
     assert None is ExportEventFactory(revent).dd_class()
