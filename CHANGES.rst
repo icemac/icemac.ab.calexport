@@ -14,6 +14,9 @@
 - Use `py.test` fixtures in the tests + convert tests to use the class-less
   approach.
 
+- Make compatible with `icemac.ab.calendar` 1.8 thus requiring at least this
+  version.
+
 
 1.0.0 (2015-05-24)
 ==================

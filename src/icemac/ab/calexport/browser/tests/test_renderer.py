@@ -2,6 +2,7 @@ from ..renderer import ExportEvent
 from icemac.ab.calendar.browser.renderer.interfaces import IEventDescription
 from icemac.ab.calendar.interfaces import IRecurringEvent
 import pytest
+import pytz
 
 
 def get_recurred_event_with_custom_field(
@@ -18,7 +19,8 @@ def get_recurred_event_with_custom_field(
         data[field.__name__] = value
 
     event = RecurringEventFactory(address_book, **data)
-    return event.get_events(event_start, DateTime(2015, 7, 31, 0)).next()
+    return event.get_events(
+        event_start, DateTime(2015, 7, 31, 0), pytz.UTC).next()
 
 
 @pytest.fixture('session')
