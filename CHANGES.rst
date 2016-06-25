@@ -2,8 +2,8 @@
  Changelog
 ===========
 
-1.1.0 (unreleased)
-==================
+1.1 (2016-06-25)
+================
 
 - Fix error on export if no categories where selected in master data.
 
