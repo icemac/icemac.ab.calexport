@@ -38,8 +38,11 @@ class ExportEvent(icemac.ab.calendar.browser.renderer.table.TableEvent):
         return []
 
     def dd_class(self):
-        is_special = self._get_field_value('special_field', default=False)
-        return 'special' if is_special else None
+        return 'special' if self.is_special else None
+
+    @property
+    def is_special(self):
+        return self._get_field_value('special_field', default=False)
 
     def _get_field_value(self, name, default):
         field = getattr(self.masterdata, name)

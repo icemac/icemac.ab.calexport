@@ -53,6 +53,10 @@ class CalendarExportView(icemac.ab.calendar.browser.calendar.MonthCalendar):
         return icemac.ab.calexport.interfaces.IExportMasterdata(
             unsave_calendar)
 
+    @zope.cachedescriptors.property.Lazy
+    def categories(self):
+        return self.masterdata.categories
+
     def __call__(self):
         self.update()
         self.request.response.setHeader(
@@ -63,15 +67,18 @@ class CalendarExportView(icemac.ab.calendar.browser.calendar.MonthCalendar):
                           self.masterdata.html_foot])
 
     def get_event_descriptions(self):
-        eds = super(CalendarExportView, self).get_event_descriptions()
-        categories = self.masterdata.categories
-        return [x
-                for x in eds
-                if x.context.category in categories]
+        return [
+            x
+            for x in super(CalendarExportView, self).get_event_descriptions()
+            if self.category_filter(x.context)]
 
     def render_calendar(self):
-        headline = '<h2>%s %s</h2>\n' % (
-            icemac.ab.calendar.browser.calendar.month_source.factory.getTitle(
-                self.calendar_month), self.calendar_year)
+        """Render the calendar of the selected month."""
+        headline = '<h2>{} {}</h2>\n'.format(
+            self.get_month_name(self.month), self.calendar_year)
         calendar = super(CalendarExportView, self).render_calendar()
         return headline + calendar
+
+    def category_filter(self, event):
+        """Return a bool whether the event is in the categories for export."""
+        return event.category in self.categories
