@@ -23,4 +23,13 @@
        />
   </configure>
 
+  <browser:page
+     for="icemac.ab.calendar.browser.renderer.interfaces.IEventDescription"
+     layer="icemac.addressbook.browser.interfaces.IAddressBookLayer"
+     name="export-forecast-event"
+     template="forecast_event.pt"
+     class="icemac.ab.calexport.browser.renderer.ExportForecastEvent"
+     permission="icemac.ab.calexport.ExportCalendar"
+     />
+
 </configure>

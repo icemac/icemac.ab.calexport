@@ -56,3 +56,31 @@ class ExportEvent(icemac.ab.calendar.browser.renderer.table.TableEvent):
         except AttributeError:  # Recurring event has no matching field:
             value = default
         return value
+
+
+class ForecastExportList(icemac.ab.calendar.browser.renderer.base.Calendar):
+    """Render events as forecast list."""
+
+    grok.name('export-forecast-list')
+
+    def render(self):
+        rendered = []
+        for ev in self.events:
+            view = zope.component.getMultiAdapter(
+                (ev, self.request), name='export-forecast-event')
+            rendered_event = view()
+            if rendered_event:
+                rendered.append(rendered_event)
+        if rendered:
+            rendered.insert(0, '<dl>')
+            rendered.append('</dl>')
+        return '\n'.join(rendered)
+
+
+class ExportForecastEvent(ExportEvent):
+    """Export an event in the forecast list."""
+
+    def __call__(self):
+        if self.is_special:
+            return super(ExportForecastEvent, self).__call__()
+        return ''

@@ -5,7 +5,8 @@
 1.2 (unreleased)
 ================
 
-- Nothing changed yet.
+- Add a forecast list below the calendar. It contains the special events of
+  the next year.
 
 
 1.1 (2016-06-25)

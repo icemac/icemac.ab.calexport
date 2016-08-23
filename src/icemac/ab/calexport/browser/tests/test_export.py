@@ -14,13 +14,27 @@ def sample_category(address_book, CategoryFactory):
 
 @pytest.fixture('function')
 def export_address_book(
-        address_book, sample_category, EventFactory, DateTime):
-    """Address boo with some export data in it.
+        address_book, sample_category, EventFactory, MasterDataFieldFactory,
+        CategoryFactory, DateTime):
+    """Address book with some export data in it.
 
     It defines the `sample_category` to be used for export of the events.
     """
+    special_field = MasterDataFieldFactory(address_book, 'special_field')
     EventFactory(address_book, category=sample_category,
                  datetime=DateTime.now)
+    EventFactory(address_book, category=sample_category,
+                 alternative_title=u'non-special event in next month',
+                 datetime=DateTime.add(DateTime.now, 31))
+    EventFactory(address_book, category=sample_category,
+                 alternative_title=u'special event in next month',
+                 datetime=DateTime.add(DateTime.now, 32),
+                 **{special_field.__name__: True})
+    EventFactory(address_book,
+                 category=CategoryFactory(address_book, u'other'),
+                 alternative_title=u'special event next month other category',
+                 datetime=DateTime.add(DateTime.now, 32),
+                 **{special_field.__name__: True})
     get_masterdata(address_book).categories = set([sample_category])
     return address_book
 
@@ -58,7 +72,7 @@ def test_export__CalendarExportView__1(export_address_book, browser):
 
 def test_export__CalendarExportView__2(
         export_address_book, sample_category, browser):
-    """It returns header, calendar and footer."""
+    """It returns header, calendar, forecast and footer."""
     md = get_masterdata(export_address_book)
     md.categories = set([sample_category])
     md.html_head = u'<html-head>'
@@ -69,7 +83,13 @@ def test_export__CalendarExportView__2(
             browser.headers['content-disposition'])
     assert browser.contents.startswith('<html-head>')
     assert (['calendar-export-test'] ==
-            [x.strip() for x in browser.etree.xpath('//dd/text()')])
+            [x.strip() for x in browser.etree.xpath('//td/dl/dd/text()')])
+    assert browser.contents.endswith('</html-foot>')
+    assert (['special event in next month'] ==
+            [x.strip() for x in browser.etree.xpath('//div/dl/dd/text()')])
+    # The forecast only contains a headline the one months having an event:
+    assert 1 == len(browser.etree.xpath('//div/h2'))
+    assert 'non-special event in next month' not in browser.contents
     assert browser.contents.endswith('</html-foot>')
 
 
@@ -77,12 +97,21 @@ def test_export__CalendarExportView__3(
         export_address_book, CategoryFactory, EventFactory, DateTime, browser):
     """It returns only events having the selected categories."""
     category = CategoryFactory(export_address_book, u'selected-category-name')
-    get_masterdata(export_address_book).categories = set([category])
+    md = get_masterdata(export_address_book)
+    md.categories = set([category])
+    special_field_name = md.special_field.__name__
     EventFactory(export_address_book, category=category, datetime=DateTime.now)
+    EventFactory(export_address_book, category=category,
+                 alternative_title=u'sel-cat-next-month',
+                 datetime=DateTime.add(DateTime.now, 32),
+                 **{special_field_name: True})
     browser.login('cal-exporter')
     browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
     assert (['selected-category-name'] ==
-            [x.strip() for x in browser.etree.xpath('//dd/text()')])
+            [x.strip() for x in browser.etree.xpath('//td/dl/dd/text()')])
+    assert (['sel-cat-next-month'] ==
+            [x.strip() for x in browser.etree.xpath('//div/dl/dd/text()')])
+    assert 'special event next month other category' not in browser.contents
     assert 'calendar-export-test' not in browser.contents
 
 

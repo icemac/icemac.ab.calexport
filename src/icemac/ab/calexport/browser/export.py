@@ -64,6 +64,7 @@ class CalendarExportView(icemac.ab.calendar.browser.calendar.MonthCalendar):
             'attachment; filename={0.masterdata.filename}'.format(self))
         return '\n'.join([self.masterdata.html_head,
                           self.render_calendar(),
+                          self.render_forecast(),
                           self.masterdata.html_foot])
 
     def get_event_descriptions(self):
@@ -82,3 +83,24 @@ class CalendarExportView(icemac.ab.calendar.browser.calendar.MonthCalendar):
     def category_filter(self, event):
         """Return a bool whether the event is in the categories for export."""
         return event.category in self.categories
+
+    def render_forecast(self):
+        """Render special events of the 11 months after the selected month."""
+        all_events = self.events_in_interval(
+            self.month + 1, self.month + 11, condition=self.category_filter)
+        result = ['<div>']
+        result.extend(self.render_forecast_events(month, events)
+                      for month, events in all_events)
+        result.append('</div>')
+        return '\n'.join(result)
+
+    def render_forecast_events(self, month, events):
+        headline = u'<h2>{} {}</h2>'.format(
+            self.get_month_name(month), month.year)
+        result = zope.component.getMultiAdapter(
+            (month, self.request, events),
+            icemac.ab.calendar.browser.renderer.interfaces.IRenderer,
+            name='export-forecast-list')()
+        if result:
+            result = '\n'.join((headline, result))
+        return result

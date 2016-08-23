@@ -1,4 +1,4 @@
-from ..renderer import ExportEvent
+from ..renderer import ExportEvent, ForecastExportList
 from icemac.ab.calendar.browser.renderer.interfaces import IEventDescription
 from icemac.ab.calendar.interfaces import IRecurringEvent
 import pytest
@@ -7,13 +7,13 @@ import pytz
 
 def get_recurred_event_with_custom_field(
         with_field, name, value, address_book, MasterDataFieldFactory,
-        RecurringEventFactory, DateTime, CategoryFactory):
+        RecurringEventFactory, DateTime, CategoryFactory, category):
     """Get a recurred event maybe having a custom field."""
     MasterDataFieldFactory(address_book, name)  # on IEvent
     event_start = DateTime(2015, 7, 30, 20)
     data = {'datetime': event_start,
             'period': 'weekly',
-            'category': CategoryFactory(address_book, u'cat')}
+            'category': CategoryFactory(address_book, category)}
     if with_field:
         field = MasterDataFieldFactory(address_book, name, IRecurringEvent)
         data[field.__name__] = value
@@ -28,11 +28,12 @@ def SpecialFieldRecurredEventFactory(
         DateTime, CategoryFactory, MasterDataFieldFactory,
         RecurringEventFactory):
     """Create a recurred event with a `special_field`."""
-    def get_recurred_event(address_book, with_field=False, value=None):
+    def get_recurred_event(
+            address_book, with_field=False, value=None, category=u'cat'):
         return get_recurred_event_with_custom_field(
             with_field, 'special_field', value, address_book,
             MasterDataFieldFactory, RecurringEventFactory, DateTime,
-            CategoryFactory)
+            CategoryFactory, category)
     return get_recurred_event
 
 
@@ -45,7 +46,7 @@ def URLFieldRecurredEventFactory(
         return get_recurred_event_with_custom_field(
             with_field, 'url_field', value, address_book,
             MasterDataFieldFactory, RecurringEventFactory, DateTime,
-            CategoryFactory)
+            CategoryFactory, category=u'cat')
     return get_recurred_event
 
 
@@ -107,3 +108,44 @@ def test_renderer__ExportEvent__action_url__2(
     revent = URLFieldRecurredEventFactory(
         address_book, with_field=True, value='http://event.info')
     assert 'http://event.info' is ExportEventFactory(revent).action_url()
+
+
+def test_renderer__ForecastExportList__render__1(
+        address_book, RequestFactory, DateTime, RecurringEventFactory,
+        MasterDataFieldFactory, CategoryFactory, utc_time_zone_pref):
+    """It renders only events which are marked as `special`."""
+    MasterDataFieldFactory(address_book, 'special_field')  # on IEvent
+    field = MasterDataFieldFactory(
+        address_book, 'special_field', IRecurringEvent)
+    event_start = DateTime(2015, 7, 30, 20)
+
+    # special event
+    data = {'datetime': event_start,
+            'period': 'weekly',
+            'category': CategoryFactory(address_book, u'special-event'),
+            field.__name__: True}
+    special_recurring_event = RecurringEventFactory(address_book, **data)
+    special_recurred_event = special_recurring_event.get_events(
+        event_start, DateTime(2015, 7, 31, 0), pytz.UTC).next()
+
+    # non special event
+    data2 = {'datetime': event_start,
+             'period': 'weekly',
+             'category': CategoryFactory(address_book, u'normal-event'),
+             field.__name__: False}
+    non_special_recurring_event = RecurringEventFactory(address_book, **data2)
+    non_special_recurred_event = non_special_recurring_event.get_events(
+        event_start, DateTime(2015, 7, 31, 0), pytz.UTC).next()
+
+    # forecast list
+    forecast = ForecastExportList(
+        month=None, request=RequestFactory(),
+        events=[IEventDescription(non_special_recurred_event),
+                IEventDescription(special_recurred_event)])
+    assert '''\
+<dl>
+<dt>2015-07-30 20:00:00+00:00</dt>
+<dd>special-event</dd>
+
+</dl>
+''' == forecast.render()
