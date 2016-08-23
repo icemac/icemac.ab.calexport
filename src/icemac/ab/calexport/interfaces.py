@@ -60,8 +60,11 @@ class IExportMasterdata(zope.interface.Interface):
             source=icemac.ab.calendar.interfaces.category_source))
 
     special_field = zope.schema.Choice(
-        title=_('Use this Boolean field to determine whether the event should '
-                'be rendered with the `special` CSS class'),
+        title=_('Use this user defined Boolean field to determine whether the '
+                'event is a top event'),
+        description=_('Top events are rendered with the CSS class `special` '
+                      'and show up in the forecast list below the calendar '
+                      'table.'),
         source=event_boolean_fields,
         required=False)
 
