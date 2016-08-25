@@ -147,5 +147,4 @@ def test_renderer__ForecastExportList__render__1(
 <dt>2015-07-30 20:00:00+00:00</dt>
 <dd>special-event</dd>
 
-</dl>
-''' == forecast.render()
+</dl>''' == forecast.render()
