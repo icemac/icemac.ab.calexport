@@ -69,7 +69,9 @@ class IExportMasterdata(zope.interface.Interface):
         required=False)
 
     url_field = zope.schema.Choice(
-        title=_('Use this URL field to render an external link in the '
-                'exported calender file'),
+        title=_('Use this user defined URL field to determine whether the '
+                'event should be rendered as a link event'),
+        description=_('If a URL is entered in this field the event is '
+                      'rendered as a link to the URL.'),
         source=event_url_fields,
         required=False)
