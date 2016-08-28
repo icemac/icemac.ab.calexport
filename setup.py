@@ -49,7 +49,7 @@ setuptools.setup(
     zip_safe=False,
     install_requires=[
         'grokcore.component >= 2.5.1.dev1',
-        'icemac.ab.calendar >= 1.8.dev0',
+        'icemac.ab.calendar >= 1.10.dev0',
         'icemac.addressbook >= 2.7.dev0',
         'setuptools',
     ],
