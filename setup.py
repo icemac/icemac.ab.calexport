@@ -8,7 +8,7 @@ def read(*path_elements):
     return file(os.path.join(*path_elements)).read()
 
 
-version = '1.2.dev0'
+version = '1.2'
 long_description = '\n\n'.join([
     read('README.rst'),
     read('CHANGES.rst'),
@@ -26,7 +26,7 @@ setuptools.setup(
     url='https://bitbucket.org/icemac/icemac.ab.calexport',
     license='ZPL 2.1',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Paste',
         'Framework :: Zope3',

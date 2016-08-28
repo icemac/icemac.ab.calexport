@@ -2,7 +2,7 @@
  Changelog
 ===========
 
-1.2 (unreleased)
+1.2 (2016-08-28)
 ================
 
 - Add a forecast list below the calendar. It contains the special events of
