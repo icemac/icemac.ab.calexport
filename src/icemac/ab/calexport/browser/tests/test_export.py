@@ -93,6 +93,20 @@ def test_export__CalendarExportView__2(
     assert browser.contents.endswith('</html-foot>')
 
 
+def test_export__CalendarExportView__2_5(
+        export_address_book, sample_category, browser):
+    """It does not break if head or foot is `None`.."""
+    md = get_masterdata(export_address_book)
+    md.categories = set([sample_category])
+    md.html_head = None
+    md.html_foot = None
+    browser.login('cal-exporter')
+    browser.handleErrors = False
+    browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
+    assert (['calendar-export-test'] ==
+            [x.strip() for x in browser.etree.xpath('//td/dl/dd/text()')])
+
+
 def test_export__CalendarExportView__3(
         export_address_book, CategoryFactory, EventFactory, DateTime, browser):
     """It returns only events having the selected categories."""

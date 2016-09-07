@@ -62,10 +62,10 @@ class CalendarExportView(icemac.ab.calendar.browser.calendar.MonthCalendar):
         self.request.response.setHeader(
             'Content-Disposition',
             'attachment; filename={0.masterdata.filename}'.format(self))
-        return '\n'.join([self.masterdata.html_head,
+        return '\n'.join([self.masterdata.html_head or u'',
                           self.render_calendar(),
                           self.render_forecast(),
-                          self.masterdata.html_foot])
+                          self.masterdata.html_foot or u''])
 
     def get_event_descriptions(self):
         return [

@@ -5,7 +5,8 @@
 1.3 (unreleased)
 ================
 
-- Nothing changed yet.
+- Prevent an error which might occur if HTML header or HTML footer in master
+  data are empty.
 
 
 1.2 (2016-08-28)
