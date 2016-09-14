@@ -1,0 +1,20 @@
+include *.TXT
+include *.py
+include *.rst
+include pytest.ini
+include .coveragerc
+
+exclude *.cfg
+include buildout.cfg
+
+exclude MANIFEST.in
+
+include .hgignore
+exclude .hgignore
+
+include .hgtags
+exclude .hgtags
+
+recursive-include cache *.txt
+recursive-include src *.pt
+recursive-include src *.zcml
