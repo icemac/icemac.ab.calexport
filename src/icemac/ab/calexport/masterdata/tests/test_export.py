@@ -5,10 +5,15 @@ from mechanize import LinkNotFoundError, HTTPError
 import pytest
 
 
-def test_export__Masterdata__1(address_book, CategoryFactory, browser):
+def test_export__Masterdata__1(
+        address_book, CategoryFactory, MasterDataFieldFactory, browser):
     """It saves the entered data."""
     CategoryFactory(address_book, u'foo')
     CategoryFactory(address_book, u'bar')
+    MasterDataFieldFactory(
+        address_book, 'special_field', field_title=u'Special?')
+    MasterDataFieldFactory(
+        address_book, 'custom_field', field_title=u'Custom?')
     browser.login('cal-export-editor')
     browser.open(browser.CALENDAR_MASTERDATA_URL)
     browser.getLink('Configure export').click()
@@ -16,6 +21,7 @@ def test_export__Masterdata__1(address_book, CategoryFactory, browser):
     assert browser.getControl('Name for the generated').value == 'export.html'
     browser.getControl('HTML to be inserted above').value = '<html>cal'
     browser.getControl('foo').selected = True
+    browser.getControl('Special?').selected = True
     browser.getControl('Name for the generated').value = 'events.html'
     browser.getControl('Apply').click()
     assert 'Data successfully updated.' == browser.message
@@ -23,6 +29,8 @@ def test_export__Masterdata__1(address_book, CategoryFactory, browser):
     assert '<html>cal' == browser.getControl('HTML to be inserted above').value
     assert browser.getControl('foo').selected
     assert not browser.getControl('bar').selected
+    assert browser.getControl('Special?').selected
+    assert not browser.getControl('Custom?').selected
     assert browser.getControl('Name for the generated').value == 'events.html'
 
 
