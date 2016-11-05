@@ -10,6 +10,7 @@
 
 - Bring test coverage to 100 %.
 
+- Adapt code to `icemac.ab.calendar >= 1.11`.
 
 - Adapt role configuration to `icemac.addressbook >= 2.9`.
 

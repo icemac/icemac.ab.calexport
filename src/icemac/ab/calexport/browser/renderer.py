@@ -11,8 +11,11 @@ class ExportTable(icemac.ab.calendar.browser.renderer.table.Table):
     """Tabular export of a calendar."""
 
     grok.name('export-table')
-    may_render_days_as_add_links = False
     render_event_adapter_name = 'export-event'
+
+    def get_add_event_for_day_url(self):
+        """There are no add links needed in the export."""
+        return None
 
 
 class ExportEvent(icemac.ab.calendar.browser.renderer.table.TableEvent):
