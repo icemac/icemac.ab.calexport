@@ -10,58 +10,26 @@
 
   <grant
      role="icemac.ab.calexport.ExportEditor"
-     permission="zope.dublincore.view"
-     />
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="zope.View"
-     />
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.addressbook.ViewAddressBook"
-     />
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.addressbook.ViewSomePrincipals"
-     />
+     permissions="
+        icemac.ab.calendar.EditCalendarAnnotations
+        icemac.ab.calendar.ViewCalendar
+        icemac.ab.calendar.ViewCategory
+        icemac.ab.calendar.ViewEvent
+        icemac.ab.calendar.ViewRecurringEvent
+        icemac.ab.calexport.EditExportMasterdata
+        icemac.ab.calexport.ExportCalendar
+        icemac.addressbook.ViewAddressBook
+        icemac.addressbook.ViewPersonName
+        icemac.addressbook.ViewSomePrincipals
+        z3c.preference.EditPreference
+        zope.View
+        zope.dublincore.view
+     " />
 
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.ab.calendar.EditCalendarAnnotations"
-     />
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.ab.calendar.ViewCalendar"
-     />
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.ab.calendar.ViewCategory"
-     />
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.ab.calendar.ViewEvent"
-     />
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.ab.calendar.ViewRecurringEvent"
-     />
-
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.addressbook.ViewPersonName"
-     />
-
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="z3c.preference.EditPreference" />
-
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.ab.calexport.ExportCalendar" />
-
-  <grant
-     role="icemac.ab.calexport.ExportEditor"
-     permission="icemac.ab.calexport.EditExportMasterdata" />
+  <subscriber
+    for="*"
+    provides="icemac.addressbook.principals.interfaces.IEditorRole"
+    factory=".roles.editor_role" />
 
 
   <!-- Exporter -->
@@ -73,59 +41,32 @@
 
   <grant
      role="icemac.ab.calexport.Exporter"
-     permission="zope.dublincore.view"
-     />
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="zope.View"
-     />
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.addressbook.ViewAddressBook"
-     />
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.addressbook.ViewSomePrincipals"
-     />
+     permissions="
+        icemac.ab.calendar.ViewCalendar
+        icemac.ab.calendar.ViewCategory
+        icemac.ab.calendar.ViewEvent
+        icemac.ab.calendar.ViewRecurringEvent
+        icemac.ab.calexport.ExportCalendar
+        icemac.addressbook.ViewAddressBook
+        icemac.addressbook.ViewPersonName
+        icemac.addressbook.ViewSomePrincipals
+        z3c.preference.EditPreference
+        zope.View
+        zope.dublincore.view
+     " />
 
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.ab.calendar.ViewCalendar"
-     />
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.ab.calendar.ViewCategory"
-     />
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.ab.calendar.ViewEvent"
-     />
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.ab.calendar.ViewRecurringEvent"
-     />
-
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.addressbook.ViewPersonName"
-     />
-
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="z3c.preference.EditPreference" />
-
-  <grant
-     role="icemac.ab.calexport.Exporter"
-     permission="icemac.ab.calexport.ExportCalendar" />
-
-  <subscriber
-    for="*"
-    provides="icemac.addressbook.principals.interfaces.IEditorRole"
-    factory=".roles.editor_role" />
   <subscriber
     for="*"
     provides="icemac.addressbook.principals.interfaces.IVisitorRole"
     factory=".roles.visitor_role" />
 
+
+  <!-- Administrator -->
+  <grant
+     role="icemac.addressbook.global.Administrator"
+     permissions="
+        icemac.ab.calexport.EditExportMasterdata
+        icemac.ab.calexport.ExportCalendar
+     " />
 
 </configure>

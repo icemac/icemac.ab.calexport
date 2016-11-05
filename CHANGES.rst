@@ -11,6 +11,8 @@
 - Bring test coverage to 100 %.
 
 
+- Adapt role configuration to `icemac.addressbook >= 2.9`.
+
 1.2 (2016-08-28)
 ================
 
