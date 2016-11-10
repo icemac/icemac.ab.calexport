@@ -40,8 +40,10 @@ class CalendarActions(z3c.form.button.ButtonActions,
 class CalendarExportView(icemac.ab.calendar.browser.calendar.MonthCalendar):
     """View exporting the currently selected month as HTML."""
 
-    form_class = None
     renderer_name = 'export-table'
+
+    def update_form(self):
+        pass  # We do not want to render a month select form in the output.
 
     @zope.cachedescriptors.property.Lazy
     def masterdata(self):
