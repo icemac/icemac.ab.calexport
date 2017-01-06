@@ -3,7 +3,7 @@ This package provides a calendar HTML export feature for `icemac.ab.calendar`_.
 *Caution:* This package might not be as customizable as needed for a general
 HTML calendar export.
 
-.. _`icemac.ab.calendar` : http://pypi.python.org/pypi/icemac.ab.calendar
+.. _`icemac.ab.calendar` : https://pypi.org/project/icemac.ab.calendar
 
 Copyright (c) 2015 - 2017 Michael Howitz
 

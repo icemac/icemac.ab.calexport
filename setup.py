@@ -22,7 +22,7 @@ setuptools.setup(
     keywords='icemac addressbook calendar export html',
     author='Michael Howitz',
     author_email='icemac@gmx.net',
-    download_url='http://pypi.python.org/pypi/icemac.ab.calexport',
+    download_url='https://pypi.org/project/icemac.ab.calexport',
     url='https://bitbucket.org/icemac/icemac.ab.calexport',
     license='ZPL 2.1',
     classifiers=[
