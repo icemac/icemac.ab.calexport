@@ -37,7 +37,7 @@
   version.
 
 
-1.0.0 (2015-05-24)
-==================
+Older versions
+==============
 
-- Initial release.
+See OLD_CHANGES.rst inside the package.
