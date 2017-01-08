@@ -5,7 +5,11 @@
 1.4 (unreleased)
 ================
 
-- Nothing changed yet.
+- Fix forecast list:
+
+  - Render datetime localized to browser language.
+
+  - Prevent double quoting of the test.
 
 
 1.3 (2017-01-07)

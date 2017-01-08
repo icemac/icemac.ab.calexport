@@ -148,3 +148,33 @@ def test_renderer__ForecastExportList__render__1(
 <dd>special-event</dd>
 
 </dl>''' == forecast.render()
+
+
+def test_renderer__ForecastExportList__render__2(
+        address_book, RequestFactory, DateTime, RecurringEventFactory,
+        MasterDataFieldFactory, CategoryFactory, utc_time_zone_pref):
+    """It localizes the time to the locale of the user."""
+    MasterDataFieldFactory(address_book, 'special_field')  # on IEvent
+    field = MasterDataFieldFactory(
+        address_book, 'special_field', IRecurringEvent)
+    event_start = DateTime(2015, 7, 30, 20)
+
+    # special event
+    data = {'datetime': event_start,
+            'period': 'weekly',
+            'category': CategoryFactory(address_book, u'Frauentreffen'),
+            field.__name__: True}
+    special_recurring_event = RecurringEventFactory(address_book, **data)
+    special_recurred_event = special_recurring_event.get_events(
+        event_start, DateTime(2015, 7, 31, 0), pytz.UTC).next()
+
+    # forecast list
+    forecast = ForecastExportList(
+        month=None, request=RequestFactory(HTTP_ACCEPT_LANGUAGE='de_DE'),
+        events=[IEventDescription(special_recurred_event)])
+    assert '''\
+<dl>
+<dt>30.07.2015 20:00 Uhr</dt>
+<dd>Frau&shy;en&shy;tref&shy;fen</dd>
+
+</dl>''' == forecast.render()

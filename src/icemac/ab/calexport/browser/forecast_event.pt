@@ -1,2 +1,2 @@
-<dt tal:content="context/datetime">Fr, 09. September 2016</dt>
-<dd tal:content="view/text">Birthday</dd>
+<dt tal:content="view/datetime">Fr, 09. September 2016</dt>
+<dd tal:content="structure view/text">Birthday</dd>

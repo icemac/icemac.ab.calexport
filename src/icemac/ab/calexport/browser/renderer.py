@@ -87,3 +87,11 @@ class ExportForecastEvent(ExportEvent):
         if self.is_special:
             return super(ExportForecastEvent, self).__call__()
         return ''
+
+    def date(self):
+        formatter = self.request.locale.dates.getFormatter(
+            'date', 'short')
+        return formatter.format(self.context.datetime)
+
+    def datetime(self):
+        return "{date} {time}".format(date=self.date(), time=self.time())
