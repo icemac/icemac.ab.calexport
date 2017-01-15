@@ -144,7 +144,7 @@ def test_renderer__ForecastExportList__render__1(
                 IEventDescription(special_recurred_event)])
     assert '''\
 <dl>
-<dt>2015-07-30 20:00:00+00:00</dt>
+<dt>15/07/30 20:00</dt>
 <dd>special-event</dd>
 
 </dl>''' == forecast.render()
@@ -174,7 +174,7 @@ def test_renderer__ForecastExportList__render__2(
         events=[IEventDescription(special_recurred_event)])
     assert '''\
 <dl>
-<dt>30.07.2015 20:00 Uhr</dt>
+<dt>30.07.15 20:00 Uhr</dt>
 <dd>Frau&shy;en&shy;tref&shy;fen</dd>
 
 </dl>''' == forecast.render()
