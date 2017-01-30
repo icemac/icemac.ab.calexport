@@ -1,5 +1,6 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
+  <include package="icemac.ab.calendar" file="ftesting.zcml" />
   <include package="icemac.ab.calexport" />
 
   <!-- Principal who is able to edit the export of the calendar -->

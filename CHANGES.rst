@@ -5,7 +5,8 @@
 1.4 (unreleased)
 ================
 
-- Nothing changed yet.
+- Update test infrastructure to `icemac.addressbook >= 3.0` and
+  `icemac.ab.calendar >= 2.0`.
 
 
 1.3.1 (2017-01-08)
