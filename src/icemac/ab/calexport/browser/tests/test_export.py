@@ -109,22 +109,35 @@ def test_export__CalendarExportView__2_5(
 
 def test_export__CalendarExportView__3(
         export_address_book, CategoryFactory, EventFactory, DateTime, browser):
-    """It returns only events having the selected categories."""
+    """It returns only events having the selected categories.
+
+    It renders the date times nicely.
+    """
     category = CategoryFactory(export_address_book, u'selected-category-name')
     md = get_masterdata(export_address_book)
     md.categories = set([category])
     special_field_name = md.special_field.__name__
     EventFactory(export_address_book, category=category, datetime=DateTime.now)
-    EventFactory(export_address_book, category=category,
-                 alternative_title=u'sel-cat-next-month',
-                 datetime=DateTime.add(DateTime.now, 32),
-                 **{special_field_name: True})
+    non_whole_day = EventFactory(
+        export_address_book, category=category,
+        alternative_title=u'sel-cat-next-month',
+        datetime=DateTime.add(DateTime.now, 32),
+        **{special_field_name: True})
+    whole_day = EventFactory(
+        export_address_book, category=category,
+        alternative_title=u'sel-cat-next-month-whole-day',
+        datetime=DateTime.add(DateTime.now, 32),
+        whole_day_event=True,
+        **{special_field_name: True})
     browser.login('cal-exporter')
     browser.open(browser.CALEXPORT_MONTH_EXPORT_URL)
     assert (['selected-category-name'] ==
             [x.strip() for x in browser.etree.xpath('//td/dl/dd/text()')])
-    assert (['sel-cat-next-month'] ==
+    assert (['sel-cat-next-month-whole-day', 'sel-cat-next-month'] ==
             [x.strip() for x in browser.etree.xpath('//div/dl/dd/text()')])
+    assert ([DateTime.format(whole_day.datetime).split()[0] + u' \u200b',
+             DateTime.format(non_whole_day.datetime)] ==
+            [x.strip() for x in browser.etree.xpath('//div/dl/dt/text()')])
     assert 'special event next month other category' not in browser.contents
     assert 'calendar-export-test' not in browser.contents
 
