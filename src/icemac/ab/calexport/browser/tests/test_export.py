@@ -1,4 +1,3 @@
-from ..export import CalendarActions
 from icemac.ab.calexport.testing import get_masterdata
 import pytest
 
@@ -45,8 +44,9 @@ def export_address_book(
 def test_export__CalendarActions__update__1(address_book, browser):
     """It renders the export button a calendar exporter user."""
     browser.login('cal-exporter')
-    browser.open(browser.CALENDAR_OVERVIEW_URL)
-    assert browser.getControl(CalendarActions.export_button_title)
+    browser.open(browser.CALENDAR_MONTH_OVERVIEW_URL)
+    assert (['form.buttons.apply', 'form.buttons.export'] ==
+            browser.submit_control_names)
 
 
 def test_export__CalendarActions__update__2(address_book, browser):
@@ -55,9 +55,9 @@ def test_export__CalendarActions__update__2(address_book, browser):
     Because he is not allowed to export.
     """
     browser.login('cal-editor')
-    browser.open(browser.CALENDAR_OVERVIEW_URL)
-    with pytest.raises(LookupError):
-        browser.getControl(CalendarActions.export_button_title)
+    browser.open(browser.CALENDAR_MONTH_OVERVIEW_URL)
+    assert browser.CALENDAR_MONTH_OVERVIEW_URL == browser.url  # no log-in form
+    assert ['form.buttons.apply'] == browser.submit_control_names
 
 
 def test_export__CalendarExportView__1(export_address_book, browser):
