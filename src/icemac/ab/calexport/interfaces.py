@@ -30,6 +30,7 @@ class EventTypedFields(zc.sourcefactory.basic.BasicSourceFactory):
     def getTitle(self, value):
         return value.title
 
+
 event_boolean_fields = EventTypedFields(u'Bool')
 event_url_fields = EventTypedFields(u'URI')
 
