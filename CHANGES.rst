@@ -2,7 +2,7 @@
  Changelog
 ===========
 
-1.4 (unreleased)
+1.4 (2017-02-04)
 ================
 
 - Update test infrastructure to `icemac.addressbook >= 3.0` and
@@ -38,22 +38,6 @@
 
 - Add a forecast list below the calendar. It contains the special events of
   the next year.
-
-
-1.1 (2016-06-25)
-================
-
-- Fix error on export if no categories where selected in master data.
-
-- Add ability to render a special CSS class for certain events.
-
-- Add ability to render an event as a hyperlink.
-
-- Use `py.test` fixtures in the tests + convert tests to use the class-less
-  approach.
-
-- Make compatible with `icemac.ab.calendar` 1.8 thus requiring at least this
-  version.
 
 
 Older versions
