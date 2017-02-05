@@ -1,7 +1,7 @@
 from icemac.ab.calendar.interfaces import IEvent
 from icemac.ab.calexport.testing import get_masterdata
 from icemac.addressbook.interfaces import IEntity
-from mechanize import LinkNotFoundError, HTTPError
+from zope.testbrowser.browser import LinkNotFoundError, HTTPError
 import pytest
 
 

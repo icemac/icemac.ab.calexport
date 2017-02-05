@@ -5,7 +5,7 @@
 1.5 (unreleased)
 ================
 
-- Nothing changed yet.
+- Update to changes in test infrastructure in `icemac.addressbook >= 4.0`.
 
 
 1.4 (2017-02-04)
