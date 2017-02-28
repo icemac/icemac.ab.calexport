@@ -5,6 +5,8 @@
 1.5 (unreleased)
 ================
 
+- Allow umlauts in month names.
+
 - Update to changes in test infrastructure in `icemac.addressbook >= 4.0`.
 
 
