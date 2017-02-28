@@ -77,7 +77,7 @@ class CalendarExportView(icemac.ab.calendar.browser.calendar.MonthCalendar):
 
     def render_calendar(self):
         """Render the calendar of the selected month."""
-        headline = '<h2>{} {}</h2>\n'.format(
+        headline = u'<h2>{} {}</h2>\n'.format(
             self.get_month_name(self.month), self.calendar_year)
         calendar = super(CalendarExportView, self).render_calendar()
         return headline + calendar

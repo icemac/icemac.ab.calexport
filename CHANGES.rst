@@ -5,7 +5,7 @@
 1.4.1 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Allow umlauts in month names.
 
 
 1.4 (2017-02-04)
