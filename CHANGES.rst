@@ -2,7 +2,7 @@
  Changelog
 ===========
 
-1.4.1 (unreleased)
+1.4.1 (2017-02-28)
 ==================
 
 - Allow umlauts in month names.
