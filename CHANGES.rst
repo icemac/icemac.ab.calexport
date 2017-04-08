@@ -41,12 +41,6 @@
 
 - Adapt role configuration to `icemac.addressbook >= 2.9`.
 
-1.2 (2016-08-28)
-================
-
-- Add a forecast list below the calendar. It contains the special events of
-  the next year.
-
 
 Older versions
 ==============

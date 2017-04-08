@@ -5,6 +5,13 @@
 Change log of releases more than 2 minor versions behind the current version.
 
 
+1.2 (2016-08-28)
+================
+
+- Add a forecast list below the calendar. It contains the special events of
+  the next year.
+
+
 1.1 (2016-06-25)
 ================
 
