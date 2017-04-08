@@ -15,6 +15,9 @@ exclude .hgignore
 include .hgtags
 exclude .hgtags
 
+include bitbucket-pipelines.yml
+exclude bitbucket-pipelines.yml
+
 recursive-include cache *.txt
 recursive-include src *.pt
 recursive-include src *.zcml
