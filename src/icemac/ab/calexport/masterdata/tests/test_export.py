@@ -16,7 +16,7 @@ def test_export__Masterdata__1(
         address_book, 'custom_field', field_title=u'Custom?')
     browser.login('cal-export-editor')
     browser.open(browser.CALENDAR_MASTERDATA_URL)
-    browser.getLink('Configure export').click()
+    browser.getLink('Configure the calendar html export').click()
     assert browser.CALEXPORT_MASTER_DATA_URL == browser.url
     assert browser.getControl('Name for the generated').value == 'export.html'
     browser.getControl('HTML to be inserted above').value = '<html>cal'

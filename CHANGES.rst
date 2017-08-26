@@ -5,7 +5,7 @@
 1.6 (unreleased)
 ================
 
-- Nothing changed yet.
+- Add breadcrumbs.
 
 
 1.5 (2017-04-08)

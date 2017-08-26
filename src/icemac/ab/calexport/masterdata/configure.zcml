@@ -9,7 +9,7 @@
      manager="icemac.ab.calendar.masterdata.interfaces.ICalendarMasterData"
      layer="icemac.addressbook.browser.interfaces.IAddressBookLayer"
      name="ConfigureExport"
-     title="Configure export"
+     title="Configure the calendar html export"
      permission="icemac.ab.calexport.EditExportMasterdata"
      viewName="++attribute++calendar/@@edit-export-masterdata.html"
      weight="50"
