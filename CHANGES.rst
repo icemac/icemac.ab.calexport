@@ -7,6 +7,8 @@
 
 - Add breadcrumbs.
 
+- Also release as wheel.
+
 
 1.5 (2017-04-08)
 ================
