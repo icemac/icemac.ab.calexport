@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-import os.path
 import setuptools
 
 
-def read(*path_elements):
-    """Read file."""
-    return file(os.path.join(*path_elements)).read()
+def read(path):
+    """Read a file."""
+    with open(path) as f:
+        return f.read()
 
 
 version = '1.6.dev0'
@@ -26,7 +26,7 @@ setuptools.setup(
     url='https://bitbucket.org/icemac/icemac.ab.calexport',
     license='ZPL 2.1',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Paste',
         'Framework :: Zope3',
@@ -50,7 +50,7 @@ setuptools.setup(
     install_requires=[
         'grokcore.component >= 2.5.1.dev1',
         'icemac.ab.calendar >= 2.0.dev0',
-        'icemac.addressbook >= 4.2.dev0',
+        'icemac.addressbook >= 5.0.dev0',
         'setuptools',
         'zope.securitypolicy >= 4.1',
     ],
