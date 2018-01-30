@@ -55,32 +55,6 @@ def test_export__Masterdata__3(address_book, browser):
         ['special_field', 'Bool', 'Special?'],
         ['url_field', 'URI', 'URL'],
     ])
-def test_export__ExportMasterData__special_field__1(
-        address_book, MasterDataFieldFactory,
-        attr_name, field_type, field_title):
-    """It stores and returns a field reference."""
-    md = get_masterdata(address_book)
-    # None by default
-    assert None is getattr(md, attr_name)
-    field = MasterDataFieldFactory(
-        address_book, attr_name, field_type=unicode(field_type),
-        field_title=unicode(field_title))
-    assert field == getattr(md, attr_name)
-    # The attribute is a property which stores a field reference
-    private_attr_name = '_{}'.format(attr_name)
-    assert ('IcemacAbCalendarEventEvent###Field-1' ==
-            getattr(md, private_attr_name))
-    # Reset to None is possible, too
-    setattr(md, attr_name, None)
-    assert None is getattr(md, attr_name)
-    assert None is getattr(md, private_attr_name)
-
-
-@pytest.mark.parametrize(
-    'attr_name,field_type,field_title', [
-        ['special_field', 'Bool', 'Special?'],
-        ['url_field', 'URI', 'URL'],
-    ])
 def test_export__ExportMasterData__special_field__2(
         address_book, MasterDataFieldFactory,
         attr_name, field_type, field_title):

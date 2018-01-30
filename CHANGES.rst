@@ -5,7 +5,7 @@
 1.7 (unreleased)
 ================
 
-- Nothing changed yet.
+- Refactor code.
 
 
 1.6 (2017-12-26)
