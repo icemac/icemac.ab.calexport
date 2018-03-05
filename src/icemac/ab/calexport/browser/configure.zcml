@@ -14,7 +14,7 @@
 
   <configure package="icemac.ab.calendar.browser.renderer">
     <browser:page
-       for=".interfaces.IEventDescription"
+       for="..interfaces.IEventDescription"
        layer="icemac.ab.calendar.browser.interfaces.ICalendarLayer"
        name="export-event"
        template="table_event.pt"
@@ -24,7 +24,7 @@
   </configure>
 
   <browser:page
-     for="icemac.ab.calendar.browser.renderer.interfaces.IEventDescription"
+     for="icemac.ab.calendar.browser.interfaces.IEventDescription"
      layer="icemac.addressbook.browser.interfaces.IAddressBookLayer"
      name="export-forecast-event"
      template="forecast_event.pt"

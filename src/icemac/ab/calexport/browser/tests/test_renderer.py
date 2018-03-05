@@ -1,5 +1,5 @@
 from ..renderer import ExportEvent, ForecastExportList
-from icemac.ab.calendar.browser.renderer.interfaces import IEventDescription
+from icemac.ab.calendar.browser.interfaces import IEventDescription
 from icemac.ab.calendar.interfaces import IRecurringEvent
 import pytest
 import pytz
