@@ -4,6 +4,15 @@
 
 Change log of releases more than 2 minor versions behind the current version.
 
+1.4 (2017-02-04)
+================
+
+- Update test infrastructure to `icemac.addressbook >= 3.0` and
+  `icemac.ab.calendar >= 2.0`.
+
+- Fix rendering glitch of whole day events in the forecast list.
+
+
 1.3.1 (2017-01-08)
 ==================
 

@@ -24,15 +24,6 @@
 - Update to changes in test infrastructure in `icemac.addressbook >= 4.0`.
 
 
-1.4 (2017-02-04)
-================
-
-- Update test infrastructure to `icemac.addressbook >= 3.0` and
-  `icemac.ab.calendar >= 2.0`.
-
-- Fix rendering glitch of whole day events in the forecast list.
-
-
 Older versions
 ==============
 
