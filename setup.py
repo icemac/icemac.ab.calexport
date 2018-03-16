@@ -8,7 +8,7 @@ def read(path):
         return f.read()
 
 
-version = '1.7.dev0'
+version = '1.7'
 long_description = '\n\n'.join([
     read('README.rst'),
     read('CHANGES.rst'),

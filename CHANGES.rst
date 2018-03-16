@@ -2,7 +2,7 @@
  Changelog
 ===========
 
-1.7 (unreleased)
+1.7 (2018-03-16)
 ================
 
 - Update to `icemac.ab.calendar >= 3.0`.
