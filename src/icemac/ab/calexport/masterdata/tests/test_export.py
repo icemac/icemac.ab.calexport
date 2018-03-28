@@ -1,7 +1,7 @@
 from icemac.ab.calendar.interfaces import IEvent
 from icemac.ab.calexport.testing import get_masterdata
 from icemac.addressbook.interfaces import IEntity
-from zope.testbrowser.browser import LinkNotFoundError, HTTPError
+from zope.testbrowser.browser import LinkNotFoundError
 import pytest
 
 
@@ -45,9 +45,7 @@ def test_export__Masterdata__2(address_book, browser):
 def test_export__Masterdata__3(address_book, browser):
     """It cannot be accessed for users with the exporter role."""
     browser.login('cal-exporter')
-    with pytest.raises(HTTPError) as err:
-        browser.open(browser.CALEXPORT_MASTER_DATA_URL)
-    assert 'HTTP Error 403: Forbidden' == str(err.value)
+    browser.assert_forbidden(browser.CALEXPORT_MASTER_DATA_URL)
 
 
 @pytest.mark.parametrize(

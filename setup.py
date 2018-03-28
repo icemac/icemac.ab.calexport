@@ -50,7 +50,7 @@ setuptools.setup(
     install_requires=[
         'grokcore.component >= 2.5.1.dev1',
         'icemac.ab.calendar >= 3.0.dev0',
-        'icemac.addressbook >= 5.0.dev0',
+        'icemac.addressbook >= 7.0.dev0',
         'setuptools',
         'zope.securitypolicy >= 4.1',
     ],
