@@ -2,7 +2,7 @@
  Changelog
 ===========
 
-1.7.1 (unreleased)
+1.7.1 (2018-03-31)
 ==================
 
 - Add a missing migration for a refactoring in 1.7 possibly breaking export
