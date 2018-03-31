@@ -5,6 +5,9 @@
 1.8 (unreleased)
 ================
 
+- Add a missing migration for a refactoring in 1.7 possibly breaking export
+  and master data.
+
 - Update to changes in test infrastructure in `icemac.addressbook >= 7.0`.
 
 
