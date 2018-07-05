@@ -38,4 +38,4 @@ Older versions
 
 See `OLD_CHANGES.rst`_.
 
-.. _`OLD_CHANGES.rst` : https://bitbucket.org/icemac/icemac.ab.calexport/raw/tip/OLD_CHANGES.rst
+.. _`OLD_CHANGES.rst` : https://bitbucket.org/icemac/icemac.ab.calexport/raw/default/OLD_CHANGES.rst
