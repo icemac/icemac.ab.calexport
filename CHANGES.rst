@@ -26,14 +26,6 @@
 - Also release as wheel.
 
 
-1.5 (2017-04-08)
-================
-
-- Allow umlauts in month names.
-
-- Update to changes in test infrastructure in `icemac.addressbook >= 4.0`.
-
-
 Older versions
 ==============
 

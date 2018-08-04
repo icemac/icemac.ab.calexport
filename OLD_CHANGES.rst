@@ -4,6 +4,14 @@
 
 Change log of releases more than 2 minor versions behind the current version.
 
+1.5 (2017-04-08)
+================
+
+- Allow umlauts in month names.
+
+- Update to changes in test infrastructure in `icemac.addressbook >= 4.0`.
+
+
 1.4 (2017-02-04)
 ================
 
