@@ -5,7 +5,7 @@
 1.9 (unreleased)
 ================
 
-- Nothing changed yet.
+- Update to changes in test infrastructure in `icemac.addressbook >= 8.0`.
 
 
 1.8 (2018-08-04)

@@ -23,7 +23,7 @@ def test_export__Masterdata__1(
     browser.getControl('foo').selected = True
     browser.getControl('Special?').selected = True
     browser.getControl('Name for the generated').value = 'events.html'
-    browser.getControl('Apply').click()
+    browser.getControl('Save').click()
     assert 'Data successfully updated.' == browser.message
     browser.open(browser.CALEXPORT_MASTER_DATA_URL)
     assert '<html>cal' == browser.getControl('HTML to be inserted above').value
