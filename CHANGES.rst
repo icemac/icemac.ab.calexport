@@ -7,6 +7,8 @@
 
 - Update to changes in test infrastructure in `icemac.addressbook >= 8.0`.
 
+- Update to `icemac.ab.calendar >= 3.2`.
+
 - Change installation procedure from `bootstrap.py` to `virtualenv`,
   see `README.txt`.
 
