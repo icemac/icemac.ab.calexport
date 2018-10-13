@@ -2,7 +2,7 @@
  Changelog
 ===========
 
-1.9 (unreleased)
+1.9 (2018-10-13)
 ================
 
 - Update to changes in test infrastructure in `icemac.addressbook >= 8.0`.
