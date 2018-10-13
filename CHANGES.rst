@@ -29,14 +29,6 @@
 - Update to `icemac.ab.calendar >= 3.0`.
 
 
-1.6 (2017-12-26)
-================
-
-- Add breadcrumbs.
-
-- Also release as wheel.
-
-
 Older versions
 ==============
 

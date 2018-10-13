@@ -4,6 +4,14 @@
 
 Change log of releases more than 2 minor versions behind the current version.
 
+1.6 (2017-12-26)
+================
+
+- Add breadcrumbs.
+
+- Also release as wheel.
+
+
 1.5 (2017-04-08)
 ================
 
