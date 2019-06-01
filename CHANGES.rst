@@ -5,7 +5,7 @@
 1.10 (unreleased)
 =================
 
-- Nothing changed yet.
+- Update the ZCML configuration to changes in `icemac.addressbook >= 9`.
 
 
 1.9 (2018-10-13)
