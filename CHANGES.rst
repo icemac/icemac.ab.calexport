@@ -2,7 +2,7 @@
  Changelog
 ===========
 
-1.10 (unreleased)
+1.10 (2019-10-01)
 =================
 
 - Update the ZCML configuration to changes in `icemac.addressbook >= 9`.
