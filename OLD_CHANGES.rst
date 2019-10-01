@@ -4,6 +4,12 @@
 
 Change log of releases more than 2 minor versions behind the current version.
 
+1.7 (2018-03-16)
+================
+
+- Update to `icemac.ab.calendar >= 3.0`.
+
+
 1.6 (2017-12-26)
 ================
 
