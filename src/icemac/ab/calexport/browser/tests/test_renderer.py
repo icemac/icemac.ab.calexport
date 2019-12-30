@@ -107,7 +107,7 @@ def test_renderer__ExportEvent__action_url__2(
     """It returns `None` by default."""
     revent = URLFieldRecurredEventFactory(
         address_book, with_field=True, value='http://event.info')
-    assert 'http://event.info' is ExportEventFactory(revent).action_url()
+    assert 'http://event.info' == ExportEventFactory(revent).action_url()
 
 
 def test_renderer__ForecastExportList__render__1(
