@@ -5,7 +5,7 @@
 1.11 (unreleased)
 =================
 
-- Nothing changed yet.
+- Move code repository to https://github.com/icemac/icemac.ab.calexport.
 
 
 1.10 (2019-10-01)
@@ -41,4 +41,4 @@ Older versions
 
 See `OLD_CHANGES.rst`_.
 
-.. _`OLD_CHANGES.rst` : https://bitbucket.org/icemac/icemac.ab.calexport/raw/default/OLD_CHANGES.rst
+.. _`OLD_CHANGES.rst` : https://github.com/icemac/icemac.ab.calexport/blob/master/OLD_CHANGES.rst

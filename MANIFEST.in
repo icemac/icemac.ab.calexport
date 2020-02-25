@@ -1,22 +1,14 @@
 include *.TXT
 include *.py
 include *.rst
-include pytest.ini
-include .coveragerc
 
 exclude *.cfg
 include buildout.cfg
 
 exclude MANIFEST.in
 
-include .hgignore
-exclude .hgignore
-
-include .hgtags
-exclude .hgtags
-
-include bitbucket-pipelines.yml
-exclude bitbucket-pipelines.yml
+include .gitignore
+exclude .gitignore
 
 recursive-include cache *.txt
 recursive-include src *.pt

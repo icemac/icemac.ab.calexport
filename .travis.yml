@@ -1,0 +1,4 @@
+version: ~> 1.0
+language: python
+import:
+  - source: icemac/icemac.addressbook:.travis-blueprint.yml

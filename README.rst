@@ -5,7 +5,7 @@ HTML calendar export.
 
 .. _`icemac.ab.calendar` : https://pypi.org/project/icemac.ab.calendar
 
-Copyright (c) 2015-2019 Michael Howitz
+Copyright (c) 2015-2020 Michael Howitz
 
 This package is licensed under the MIT License, see LICENSE.txt inside the
 package.
@@ -21,9 +21,9 @@ Source code
 
 Get the source code::
 
-   $ hg clone https://bitbucket.org/icemac/icemac.ab.calexport
+   $ git clone https://github.com/icemac/icemac.ab.calexport
 
-or fork me on: https://bitbucket.org/icemac/icemac.ab.calexport
+or fork me at https://github.com/icemac/icemac.ab.calexport.
 
 Running the tests
 =================

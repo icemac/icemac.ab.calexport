@@ -23,7 +23,7 @@ setuptools.setup(
     author='Michael Howitz',
     author_email='icemac@gmx.net',
     download_url='https://pypi.org/project/icemac.ab.calexport',
-    url='https://bitbucket.org/icemac/icemac.ab.calexport',
+    url='https://github.com/icemac/icemac.ab.calexport',
     license='MIT',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -45,7 +45,7 @@ setuptools.setup(
     install_requires=[
         'grokcore.component >= 2.5.1.dev1',
         'icemac.ab.calendar >= 3.2.dev0',
-        'icemac.addressbook >= 9.0.dev0',
+        'icemac.addressbook >= 9.3.dev0',
         'setuptools',
         'zope.securitypolicy >= 4.1',
     ],
