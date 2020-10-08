@@ -10,5 +10,5 @@ def test_interfaces__EventTypedFields__getValue__1(address_book, FieldFactory):
     FieldFactory(address_book, IEvent, 'URI', 'uri')
     FieldFactory(address_book, IEvent, 'Bool', 'bool 2')
     source = EventTypedFields('Bool')
-    assert ([u'bool 2', u'bool 1'] ==
-            [x.title for x in source.factory.getValues()])
+    assert (set([u'bool 2', u'bool 1']) ==
+            set([x.title for x in source.factory.getValues()]))
